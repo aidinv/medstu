@@ -30,7 +30,7 @@ export default class Diagnose_sign extends Component {
 
   async getMovies() {
     try {
-      const response = await fetch('http://draydinv.ir/extra/diagnose_sign.php');
+      const response = await fetch('https://draydinv.ir/extra/diagnose_sign.php');
       const json = await response.json();
       this.setState({
         DATA: json.map(item => ({
@@ -53,7 +53,7 @@ export default class Diagnose_sign extends Component {
     const newdata = this.state.DATA.map(item => {
       if (item.id === id) {
         const updatedlikes = item.likes + 1;
-        fetch('http://draydinv.ir/extra/login.php', {
+        fetch('https://draydinv.ir/extra/login.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

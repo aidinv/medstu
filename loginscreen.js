@@ -51,7 +51,7 @@ class Loginscreen extends React.Component {
 
   handleLogin = () => {
     const { username, password } = this.state;
-    fetch('http://draydinv.ir/extra/login.php', {
+    fetch('https://draydinv.ir/extra/login.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ class Loginscreen extends React.Component {
     const { username1, password1, phone1 } = this.state;
 
 
-    fetch('http://draydinv.ir/extra/signup.php', {
+    fetch('https://draydinv.ir/extra/signup.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

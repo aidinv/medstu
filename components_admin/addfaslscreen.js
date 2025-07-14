@@ -36,7 +36,7 @@ export default class Addfaslscreen extends Component {
         const { cours, fasl_name_fa, fasl_name_en, img, } = this.state;
 
 
-        fetch('http://draydinv.ir/extra/addfasl.php', {
+        fetch('https://draydinv.ir/extra/addfasl.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

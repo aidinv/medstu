@@ -22,7 +22,7 @@ const Editorj = (props) => {
     const height = Dimensions.get('window').height;
 
     useEffect(() => {
-        fetch('http://draydinv.ir/extra/gethtmlforedite3.php', {
+        fetch('https://draydinv.ir/extra/gethtmlforedite3.php', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
@@ -805,7 +805,7 @@ const Editorj = (props) => {
 
 
 
-        fetch('http://draydinv.ir/extra/addnoskhecontent.php',  {
+        fetch('https://draydinv.ir/extra/addnoskhecontent.php',  {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',

@@ -4,8 +4,8 @@ import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 
 
-const API_URL = 'http://draydinv.ir/extra/carouseledit2.php';
-const DELETE_API_URL = 'http://draydinv.ir/extra/carouseledit3.php';
+const API_URL = 'https://draydinv.ir/extra/carouseledit2.php';
+const DELETE_API_URL = 'https://draydinv.ir/extra/carouseledit3.php';
 
 const Carouseledit2 = () => {
   const [data, setData] = useState([]);

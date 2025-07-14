@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { View, Text, FlatList, Image, Dimensions, StyleSheet, ActivityIndicator } from 'react-native';
 
 const { width } = Dimensions.get('window');
-const API_URL = 'http://draydinv.ir/extra/carousel.php'; // آدرس API خود را اینجا وارد کنید
+const API_URL = 'https://draydinv.ir/extra/carousel.php'; // آدرس API خود را اینجا وارد کنید
 
 const Carousel = () => {
   const flatListRef = useRef(null);

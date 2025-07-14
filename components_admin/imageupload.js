@@ -39,7 +39,7 @@ export default function ImagePickerExample() {
     });
 
     try {
-      const response = await axios.post('http://draydinv.ir/extra/imageupload.php', formData, {
+      const response = await axios.post('https://draydinv.ir/extra/imageupload.php', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

@@ -38,7 +38,7 @@ class Diagnosedetailscreen extends Component {
 
   fetchData = async () => {
     try {
-      const response = await fetch('http://draydinv.ir/extra/diagnose_detail.php', {
+      const response = await fetch('https://draydinv.ir/extra/diagnose_detail.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
@@ -108,7 +108,7 @@ class Diagnosedetailscreen extends Component {
 
     const pre3 = `<style>#wrap {transform:scale(0.8);transform-origin:top left;display:block;overflow:hidden;width:calc(100%*1.20);height:calc(100%*1.25)}</style><div id="wrap">`;
     const pre4 = '</div>'
-    const pre5 = "<style>@font-face{font-family:'roboto';src:url('http://draydinv.ir/font1/morvarid.ttf')}body{font-size:16px;font-family:'roboto';}p{line-height:1.8}</style>"
+    const pre5 = "<style>@font-face{font-family:'roboto';src:url('https://draydinv.ir/font1/morvarid.ttf')}body{font-size:16px;font-family:'roboto';}p{line-height:1.8}</style>"
 
 
     return (

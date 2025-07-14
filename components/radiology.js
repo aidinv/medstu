@@ -28,7 +28,7 @@ export default class Radiology extends Component {
 
   async getMovies() {
     try {
-      const response = await fetch('http://draydinv.ir/extra/radiology.php');
+      const response = await fetch('https://draydinv.ir/extra/radiology.php');
       const json = await response.json();
       this.setState({ DATA: json });
     } catch (error) {

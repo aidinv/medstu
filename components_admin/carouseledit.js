@@ -5,8 +5,8 @@ import * as ImagePicker from 'expo-image-picker';
 import Carouseledit2 from './carouseledit2';
 
 const { width } = Dimensions.get('window');
-const API_URL = 'http://draydinv.ir/extra/carousel.php'; // آدرس فایل JSON
-const UPLOAD_URL = 'http://draydinv.ir/extra/carouseledit.php'; // آدرس API برای آپلود تصویر جدید
+const API_URL = 'https://draydinv.ir/extra/carousel.php'; // آدرس فایل JSON
+const UPLOAD_URL = 'https://draydinv.ir/extra/carouseledit.php'; // آدرس API برای آپلود تصویر جدید
 
 const Carouseledit = () => {
     const flatListRef = useRef(null);

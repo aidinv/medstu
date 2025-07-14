@@ -31,7 +31,7 @@ export default class Noskhe_infection extends Component {
 
   async getMovies() {
     try {
-      const response = await fetch('http://draydinv.ir/extra/noskhe_infection.php');
+      const response = await fetch('https://draydinv.ir/extra/noskhe_infection.php');
       const json = await response.json();
       this.setState({
         DATA: json.map(item => ({
@@ -54,7 +54,7 @@ export default class Noskhe_infection extends Component {
     const newdata = this.state.DATA.map(item => {
       if (item.id === id) {
         const updatedlikes = item.likes + 1;
-        fetch('http://draydinv.ir/extra/login.php', {
+        fetch('https://draydinv.ir/extra/login.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -113,7 +113,7 @@ export default class Setting1 extends Component {
 
 
 
-      const response = await fetch('http://draydinv.ir/extra/userdata.php', {
+      const response = await fetch('https://draydinv.ir/extra/userdata.php', {
         method: 'POST',
         headers: {
 
@@ -146,7 +146,7 @@ export default class Setting1 extends Component {
     const { username, password, phone, name, family, university, age, email, degree } = this.state;
 
 
-    fetch('http://draydinv.ir/extra/update_user.php', {
+    fetch('https://draydinv.ir/extra/update_user.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

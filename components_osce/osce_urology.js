@@ -30,7 +30,7 @@ export default class Osce_urology extends Component {
 
   async getMovies() {
     try {
-      const response = await fetch('http://draydinv.ir/extra/osce_urology.php');
+      const response = await fetch('https://draydinv.ir/extra/osce_urology.php');
       const json = await response.json();
       this.setState({ DATA: json });
     } catch (error) {

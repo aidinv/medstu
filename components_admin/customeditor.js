@@ -55,7 +55,7 @@ const Editora = (props) => {
       formData.append('file', imageFile);
   
       try {
-        let response = await fetch('http://draydinv.ir/extra/uploader.php', {
+        let response = await fetch('https://draydinv.ir/extra/uploader.php', {
           method: 'POST',
           body: formData,
         });
@@ -84,7 +84,7 @@ const Editora = (props) => {
 
 
 
-        fetch('http://draydinv.ir/extra/addcontent.php', {
+        fetch('https://draydinv.ir/extra/addcontent.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',

@@ -30,7 +30,7 @@ export default class Psychiatrics extends Component {
 
   async getMovies() {
     try {
-      const response = await fetch('http://draydinv.ir/extra/psychiatrics.php');
+      const response = await fetch('https://draydinv.ir/extra/psychiatrics.php');
       const json = await response.json();
       this.setState({ DATA: json });
     } catch (error) {

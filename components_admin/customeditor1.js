@@ -52,7 +52,7 @@ const Editorb = (props) => {
             });
 
             // ارسال تصویر به سرور
-            const response = await fetch("http://draydinv.ir/extra/imageupload2.php", {
+            const response = await fetch("https://draydinv.ir/extra/imageupload2.php", {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -81,7 +81,7 @@ const Editorb = (props) => {
 
 
 
-        fetch('http://draydinv.ir/extra/addnoskhecontent.php', {
+        fetch('https://draydinv.ir/extra/addnoskhecontent.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',

@@ -168,7 +168,7 @@ export default function Oscescreen({ navigation }) {
                     AsyncStorage.getItem('username')
                 if (storedusername) {
                     setusername(storedusername);
-                    fetch('http://draydinv.ir/extra/status.php', {
+                    fetch('https://draydinv.ir/extra/status.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

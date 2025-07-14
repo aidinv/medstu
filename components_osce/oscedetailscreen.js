@@ -50,7 +50,7 @@ class Oscedetailscreen extends Component {
 
   fetchData = async () => {
     try {
-      const response = await fetch('http://draydinv.ir/extra/osce_detail.php', {
+      const response = await fetch('https://draydinv.ir/extra/osce_detail.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
@@ -107,7 +107,7 @@ class Oscedetailscreen extends Component {
           <style>
             @font-face {
               font-family: 'morvarid';
-              src: url('http://draydinv.ir/font1/morvarid.ttf');
+              src: url('https://draydinv.ir/font1/morvarid.ttf');
             }
             body {
               font-size: 16px;
@@ -190,7 +190,7 @@ class Oscedetailscreen extends Component {
         likes: prevState.likes * 1 + 1,
       }))
 
-      fetch('http://draydinv.ir/extra/oscefasllike.php', {
+      fetch('https://draydinv.ir/extra/oscefasllike.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -228,7 +228,7 @@ class Oscedetailscreen extends Component {
       }))
 
 
-      fetch('http://draydinv.ir/extra/oscefasllike.php', {
+      fetch('https://draydinv.ir/extra/oscefasllike.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -263,7 +263,7 @@ class Oscedetailscreen extends Component {
 
   handleislike = () => {
     const { username, fasl_name_fa, cours_fa, ispressed } = this.state;
-    fetch('http://draydinv.ir/extra/getlikeoscefasl.php', {
+    fetch('https://draydinv.ir/extra/getlikeoscefasl.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

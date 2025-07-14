@@ -38,7 +38,7 @@ export default class Admin_diagnose extends Component {
 
     async getMovies(cat_en) {
         try {
-            const response = await fetch('http://draydinv.ir/extra/diagnose_' + cat_en + '.php');
+            const response = await fetch('https://draydinv.ir/extra/diagnose_' + cat_en + '.php');
             const json = await response.json();
             this.setState({ DATA: json });
         } catch (error) {
@@ -86,7 +86,7 @@ export default class Admin_diagnose extends Component {
 
         const showDialog1 = (text) => {
         
-            fetch('http://draydinv.ir/extra/deletediagnosefasl.php', {
+            fetch('https://draydinv.ir/extra/deletediagnosefasl.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

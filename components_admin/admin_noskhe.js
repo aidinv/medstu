@@ -38,7 +38,7 @@ export default class Admin_noskhe extends Component {
 
     async getMovies(cours_en) {
         try {
-            const response = await fetch('http://draydinv.ir/extra/noskhe_' + cours_en + '.php');
+            const response = await fetch('https://draydinv.ir/extra/noskhe_' + cours_en + '.php');
             const json = await response.json();
             this.setState({ DATA: json });
         } catch (error) {
@@ -128,7 +128,7 @@ export default class Admin_noskhe extends Component {
         const showDialog1 = (text) => {
          
         
-            fetch('http://draydinv.ir/extra/deletenoskhefasl.php', {
+            fetch('https://draydinv.ir/extra/deletenoskhefasl.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

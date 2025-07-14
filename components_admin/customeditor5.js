@@ -23,7 +23,7 @@ const Editorf = (props) => {
     
 
     useEffect(() => {
-        fetch('http://draydinv.ir/extra/gethtmlforedite.php', {
+        fetch('https://draydinv.ir/extra/gethtmlforedite.php', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
@@ -806,7 +806,7 @@ const Editorf = (props) => {
 
 
 
-        fetch('http://draydinv.ir/extra/addcontent.php', {
+        fetch('https://draydinv.ir/extra/addcontent.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',

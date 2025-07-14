@@ -38,7 +38,7 @@ export default class Editfaslscreen extends Component {
     }
     fetchData = async () => {
         try {
-            const response = await fetch('http://draydinv.ir/extra/detail.php', {
+            const response = await fetch('https://draydinv.ir/extra/detail.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
@@ -71,7 +71,7 @@ export default class Editfaslscreen extends Component {
         const { subject1, fasl_name_fa, fasl_name_en, subject } = this.state;
 
 
-        fetch('http://draydinv.ir/extra/addsubject.php', {
+        fetch('https://draydinv.ir/extra/addsubject.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ export default class Editfaslscreen extends Component {
 
         const showDialog = (c, d) => {
 
-            fetch('http://draydinv.ir/extra/deletesubject.php', {
+            fetch('https://draydinv.ir/extra/deletesubject.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

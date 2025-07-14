@@ -32,7 +32,7 @@ export default class Users extends Component {
 
     toggleValueOnServer = async (username) => {
         try {
-            const response = await fetch('http://draydinv.ir/extra/users1.php', {
+            const response = await fetch('https://draydinv.ir/extra/users1.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export default class Users extends Component {
 
     async getMovies() {
         try {
-            const response = await fetch('http://draydinv.ir/extra/users.php');
+            const response = await fetch('https://draydinv.ir/extra/users.php');
             const json = await response.json();
             this.setState({ DATA: json });
         } catch (error) {

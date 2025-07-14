@@ -40,7 +40,7 @@ export default class Admin_osce extends Component {
 
     async getMovies(cat_en) {
         try {
-            const response = await fetch('http://draydinv.ir/extra/osce_'+cat_en+'.php');
+            const response = await fetch('https://draydinv.ir/extra/osce_'+cat_en+'.php');
             const json = await response.json();
             this.setState({ DATA: json });
         } catch (error) {
@@ -125,7 +125,7 @@ export default class Admin_osce extends Component {
 
         const showDialog1 = (text) => {
         
-            fetch('http://draydinv.ir/extra/deleteoscefasl.php', {
+            fetch('https://draydinv.ir/extra/deleteoscefasl.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

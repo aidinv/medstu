@@ -76,7 +76,7 @@
 //                 const storedusername = await AsyncStorage.getItem('username');
 //                 if (storedusername) {
 //                     setusername(storedusername);
-//                     fetch('http://draydinv.ir/extra/status.php', {
+//                     fetch('https://draydinv.ir/extra/status.php', {
 //                         method: 'POST',
 //                         headers: { 'Content-Type': 'application/json' },
 //                         body: JSON.stringify({ username: storedusername, func: 'osce' }),
@@ -97,7 +97,7 @@
 //     useEffect(() => {
 //         const fetchData = async () => {
 //             try {
-//                 const response = await fetch('http://draydinv.ir/extra/drugslist.php');
+//                 const response = await fetch('https://draydinv.ir/extra/drugslist.php');
 //                 const result = await response.json();
 //                 setData(result);
 //             } catch (error) {

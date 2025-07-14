@@ -28,7 +28,7 @@ export default class Eye extends Component {
 
   async getMovies() {
     try {
-      const response = await fetch('http://draydinv.ir/extra/eye.php');
+      const response = await fetch('https://draydinv.ir/extra/eye.php');
       const json = await response.json();
       this.setState({ DATA: json });
     } catch (error) {

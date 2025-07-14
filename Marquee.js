@@ -18,7 +18,7 @@ export default class Newsitem_component extends Component {
 
     async getMovies() {
         try {
-            const response = await fetch('http://draydinv.ir/extra/news.php');
+            const response = await fetch('https://draydinv.ir/extra/news.php');
             const json = await response.json();
             this.setState({ data: json.news });
         } catch (error) {

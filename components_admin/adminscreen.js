@@ -47,7 +47,7 @@ export default function Adminscreen({ navigation }) {
 
 
 
-                        const response = await fetch('http://draydinv.ir/extra/userdata.php', {
+                        const response = await fetch('https://draydinv.ir/extra/userdata.php', {
                             method: 'POST',
                             headers: {
 

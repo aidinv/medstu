@@ -38,7 +38,7 @@ export default class Addnoskhescreen extends Component {
         const { cours1, name_fa, name_en } = this.state;
 
 
-        fetch('http://draydinv.ir/extra/addnoskhe.php', {
+        fetch('https://draydinv.ir/extra/addnoskhe.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

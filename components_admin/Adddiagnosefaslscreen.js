@@ -36,7 +36,7 @@ export default class Adddiagnosefaslscreen extends Component {
         const { cat_fa, name_fa, name_en,  } = this.state;
 
 
-        fetch('http://draydinv.ir/extra/adddiagnosefasl.php', {
+        fetch('https://draydinv.ir/extra/adddiagnosefasl.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -36,7 +36,7 @@ export default class Addoscefaslscreen extends Component {
         const { cat_fa, name_fa, name_en,  } = this.state;
 
 
-        fetch('http://draydinv.ir/extra/addoscefasl.php', {
+        fetch('https://draydinv.ir/extra/addoscefasl.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

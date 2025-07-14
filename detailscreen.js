@@ -54,7 +54,7 @@ class Detailscreen extends Component {
 
   fetchData = async () => {
     try {
-      const response = await fetch('http://draydinv.ir/extra/detail.php', {
+      const response = await fetch('https://draydinv.ir/extra/detail.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
@@ -79,7 +79,7 @@ class Detailscreen extends Component {
         likes: prevState.likes * 1 + 1,
       }))
 
-      fetch('http://draydinv.ir/extra/fasllike.php', {
+      fetch('https://draydinv.ir/extra/fasllike.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ class Detailscreen extends Component {
       }))
 
 
-      fetch('http://draydinv.ir/extra/fasllike.php', {
+      fetch('https://draydinv.ir/extra/fasllike.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ class Detailscreen extends Component {
 
   handleislike = () => {
     const { username, fasl_name_fa, cours_fa, ispressed } = this.state;
-    fetch('http://draydinv.ir/extra/getlikefasl.php', {
+    fetch('https://draydinv.ir/extra/getlikefasl.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -220,7 +220,7 @@ class Detailscreen extends Component {
           <style>
             @font-face {
               font-family: 'morvarid';
-              src: url('http://draydinv.ir/font1/morvarid.ttf');
+              src: url('https://draydinv.ir/font1/morvarid.ttf');
             }
             body {
               font-size: 16px;

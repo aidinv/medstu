@@ -20,7 +20,7 @@ const Count = () => {
 
     useEffect(() => {
         // دریافت داده از سرور
-        fetch('http://draydinv.ir/extra/getcount.php')
+        fetch('https://draydinv.ir/extra/getcount.php')
             .then(response => response.json())
             .then(jsonData => {
                 setData(jsonData); // فرض می‌کنیم jsonData به صورت آرایه‌ای از اشیاء است

@@ -38,7 +38,7 @@ export default class Editoscefaslscreen extends Component {
     }
     fetchData = async () => {
         try {
-            const response = await fetch('http://draydinv.ir/extra/osce_detail.php', {
+            const response = await fetch('https://draydinv.ir/extra/osce_detail.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
@@ -71,7 +71,7 @@ export default class Editoscefaslscreen extends Component {
         const { subject1, name_fa, name_en, subject } = this.state;
 
 
-        fetch('http://draydinv.ir/extra/addoscesubject.php', {
+        fetch('https://draydinv.ir/extra/addoscesubject.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ export default class Editoscefaslscreen extends Component {
 
         const showDialog = (c, d) => {
 
-            fetch('http://draydinv.ir/extra/deleteoscesubject.php', {
+            fetch('https://draydinv.ir/extra/deleteoscesubject.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

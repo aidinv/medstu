@@ -29,7 +29,7 @@ export default class Kidney extends Component {
 
   async getMovies() {
     try {
-      const response = await fetch('http://draydinv.ir/extra/kidney.php');
+      const response = await fetch('https://draydinv.ir/extra/kidney.php');
       const json = await response.json();
       this.setState({ DATA: json });
     } catch (error) {
