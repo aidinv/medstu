@@ -19,7 +19,7 @@ class Postdetailscreen extends Component {
       name2: this.props.route.params.name2,
       cat: this.props.route.params.cat,
       time: this.props.route.params.time,
-      code:this.props.route.params.code,
+      code: this.props.route.params.code,
       writer: this.props.route.params.writer,
       likes: this.props.route.params.likes,
       username: this.props.route.params.username,
@@ -51,13 +51,13 @@ class Postdetailscreen extends Component {
 
   fetchData = async () => {
     try {
-      const response = await fetch('https://draydinv.ir/extra/osce_detail.php', {
+      const response = await fetch('https://draydinv.ir/extra/drugs_detail.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         },
         body: JSON.stringify({
-          name_en: this.state.name_en,
+          name2: this.state.name2,
         })
       });
       const json = await response.json();
@@ -97,6 +97,7 @@ class Postdetailscreen extends Component {
       }
     } catch (e) { }
   };
+
   renderItem = ({ item }) => {
     const isExpanded = this.state.expandedItemId === item.id;
     const webViewHeight = this.state.webViewHeights[item.id] || 0;
@@ -140,17 +141,33 @@ class Postdetailscreen extends Component {
     return (
       <View style={styles.card}>
         <TouchableOpacity
-          style={{
-            backgroundColor: '#EEEEEE', padding: 10,
-            borderRadius: 5, flexDirection: 'row-reverse', alignItems: 'center',
-            elevation: 2,
-            shadowColor: 'green',
-            shadowOpacity: 1,
-          }}
-          onPress={() => this.handleToggleExpand(item.id)}>
-          <View style={{ backgroundColor: '#06d6a0', width: 10, height: 10, borderRadius: 3, justifyContent: 'center', alignSelf: 'center', marginRight: 5, marginLeft: 5 }}></View>
-          <Text style={styles.subject}>دارو : {item.name1}</Text>
-        </TouchableOpacity>
+                  style={{
+                    backgroundColor: 'white', padding: 15,
+                    borderRadius: 5, flexDirection: 'row-reverse', alignItems: 'center',
+                    elevation: 2,
+                    shadowColor: 'green',
+                    shadowOpacity: 1,
+                    justifyContent: 'space-between'
+                  }}
+                  onPress={() => this.handleToggleExpand(item.id)}>
+                  <View style={{ flexDirection: 'row-reverse' }}>
+                    <View style={{ backgroundColor: '#06d6a0', width: 10, height: 10, borderRadius: 15, justifyContent: 'center', alignSelf: 'center', marginRight: 5, marginLeft: 5 }}></View>
+                    <Text style={styles.subject}>مبحث : {item.subject}</Text>
+                  </View>
+                  <Image
+                    style={{
+                      width: 12,
+                      height: 12,
+                      transform: [{ rotate: '80deg' }],
+                      tintColor: 'grey',
+                      alignSelf: 'flex-start',
+                      marginHorizontal: 10
+                    }}
+                    source={require('../assets/img/next.png')}
+                    resizeMode='contain'
+        
+                  />
+                </TouchableOpacity>
 
         {isExpanded && (
           Platform.OS === 'web' ? (
@@ -302,6 +319,7 @@ class Postdetailscreen extends Component {
 
     return (
       <View>
+
         <View style={{ flexDirection: 'row-reverse', borderRadius: 10, marginTop: 40, backgroundColor: '', elevation: 3, shadowColor: 'white', marginHorizontal: 0, alignItems: 'center', padding: 5, borderTopWidth: 1, borderBottomWidth: 1, borderColor: 'white', elevation: 10 }}>
 
 
@@ -309,14 +327,14 @@ class Postdetailscreen extends Component {
 
 
 
-            
-              <View style={{ flexDirection: 'row-reverse', justifyContent: 'flex-start', alignItems: 'center' }}>
-                <Image resizeMode='contain' source={require('../assets/image/drug.png')} style={{ width: 30, height: 20, borderRadius: 15, tintColor: '', }} />
 
-                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}> دسته دارویی: {this.state.cat}</Text>
+            <View style={{ flexDirection: 'row-reverse', justifyContent: 'flex-start', alignItems: 'center' }}>
+              <Image resizeMode='contain' source={require('../assets/image/drug.png')} style={{ width: 30, height: 20, borderRadius: 15, tintColor: '', }} />
 
-              </View>
-            
+              <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}> دسته دارویی: {this.state.cat}</Text>
+
+            </View>
+
 
 
 
@@ -367,11 +385,12 @@ class Postdetailscreen extends Component {
 
 
         </View>
+
         <FlatList
           data={this.state.data}
           renderItem={this.renderItem}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingBottom: 110 }}
+          contentContainerStyle={{ paddingBottom: 110,marginTop:10 }}
         />
       </View>
 
@@ -441,7 +460,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    margin: 4,
+    marginHorizontal:15 ,
     padding: 4,
     backgroundColor: 'transparent',
     elevation: 0,

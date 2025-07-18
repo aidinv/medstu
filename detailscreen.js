@@ -253,15 +253,31 @@ class Detailscreen extends Component {
       <View style={styles.card}>
         <TouchableOpacity
           style={{
-            backgroundColor: '#EEEEEE', padding: 10,
+            backgroundColor: 'white', padding: 15,
             borderRadius: 5, flexDirection: 'row-reverse', alignItems: 'center',
             elevation: 2,
             shadowColor: 'green',
             shadowOpacity: 1,
+            justifyContent: 'space-between'
           }}
           onPress={() => this.handleToggleExpand(item.id)}>
-          <View style={{ backgroundColor: '#06d6a0', width: 10, height: 10, borderRadius: 3, justifyContent: 'center', alignSelf: 'center', marginRight: 5, marginLeft: 5 }}></View>
-          <Text style={styles.subject}>مبحث : {item.subject}</Text>
+          <View style={{flexDirection:'row-reverse'}}>
+            <View style={{ backgroundColor: '#06d6a0', width: 10, height: 10, borderRadius: 15, justifyContent: 'center', alignSelf: 'center', marginRight: 5, marginLeft: 5 }}></View>
+            <Text style={styles.subject}>مبحث : {item.subject}</Text>
+          </View>
+          <Image
+            style={{
+              width: 12,
+              height: 12,
+              transform: [{ rotate: '80deg' }],
+              tintColor: 'grey',
+              alignSelf: 'flex-start',
+              marginHorizontal: 10
+            }}
+            source={require('./assets/img/next.png')}
+            resizeMode='contain'
+
+          />
         </TouchableOpacity>
 
         {isExpanded && (
@@ -281,14 +297,14 @@ class Detailscreen extends Component {
               source={{ html: htmlContent }}
               javaScriptEnabled={true}
               scrollEnabled={false}
-              
+
               onMessage={(event) => this.handleWebViewMessage(event, item.id)}
               style={{
                 width: '100%',
                 height: webViewHeight,
                 backgroundColor: '#EEEEEE',
-                marginTop:5,
-                
+                marginTop: 5,
+
               }}
             />
           )
@@ -308,7 +324,7 @@ class Detailscreen extends Component {
 
     return (
       <View>
-        <View style={{ flexDirection: 'row-reverse', borderRadius: 10, marginTop: 40, backgroundColor: '', elevation: 3, shadowColor: 'white', marginHorizontal: 0, alignItems: 'center', padding: 5, borderTopWidth: 1, borderBottomWidth: 1, borderColor: 'white', elevation: 10 }}>
+        <View style={{ flexDirection: 'row-reverse', borderRadius: 10, marginTop: 10, backgroundColor: '', elevation: 3, shadowColor: 'white', marginHorizontal: 0, alignItems: 'center', padding: 5, borderTopWidth: 1, borderBottomWidth: 1, borderColor: 'white', elevation: 10 }}>
 
 
           <View style={{ flexDirection: 'column', backgroundColor: '', width: this.width, flexGrow: 1 }}>
@@ -495,7 +511,7 @@ class Detailscreen extends Component {
 
 
 
-          <View style={{ flexDirection: 'column', backgroundColor: '', width: this.width, flexGrow: 1, paddingRight: 7 }}>
+          <View style={{ flexDirection: 'column', backgroundColor: '', width: this.width, flexGrow: 1, paddingRight: 7, justifyContent: 'space-around' }}>
 
             <View style={{ flexDirection: 'row-reverse', justifyContent: 'center', alignSelf: 'flex-end' }}>
               <Image resizeMode='contain' source={require('./assets/image/watch.png')} style={{ width: 20, height: 15, borderRadius: 5, tintColor: '#06d6a0', backgroundColor: '' }} />
@@ -504,12 +520,12 @@ class Detailscreen extends Component {
 
             </View>
 
-            <View style={{ marginTop: 5, flexDirection: 'row-reverse', justifyContent: 'center', alignSelf: 'flex-end', }}>
+            {/* <View style={{ marginTop: 5, flexDirection: 'row-reverse', justifyContent: 'center', alignSelf: 'flex-end', }}>
               <Image resizeMode='contain' source={require('./assets/image/writer1.png')} style={{ width: 20, height: 15, borderRadius: 5, tintColor: '#06d6a0', backgroundColor: '' }} />
 
               <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 0, fontSize: 11, fontWeight: '600', marginTop: 0, textAlign: 'left', marginHorizontal: 0, fontFamily: 'morvarid', alignSelf: 'flex-start', textAlign: 'right', marginTop: 2 }}> نویسنده :  {this.state.writer}</Text>
 
-            </View>
+            </View> */}
 
 
             <TouchableOpacity
@@ -537,7 +553,7 @@ class Detailscreen extends Component {
           data={this.state.data}
           renderItem={this.renderItem}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingBottom: 110 }}
+          contentContainerStyle={{ paddingBottom: 110,marginTop:10 }}
         />
       </View>
 
@@ -552,7 +568,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    margin: 4,
+    marginHorizontal: 15,
     padding: 4,
     backgroundColor: 'transparent',
     elevation: 0,

@@ -1,233 +1,245 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React, { useRef, useEffect } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Animated,
+  Dimensions,
+} from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFonts } from 'expo-font';
-import { HomeStackNavigator, OsceStackNavigator, OrderStackNavigator, PostStackNavigator, DiagnoseStackNavigator, SettingStackNavigator } from "./StackNavigator"
 
-const height = Dimensions.get('window').height;
-const width = Dimensions.get('window').width;
-
-
-
+import {
+  HomeStackNavigator,
+  OrderStackNavigator,
+  OsceStackNavigator,
+  PostStackNavigator,
+  DiagnoseStackNavigator,
+  SettingStackNavigator,
+} from './StackNavigator';
 
 const Tab = createBottomTabNavigator();
+const { width } = Dimensions.get('window');
+
+const TAB_COUNT = 6;
+const tabBarWidth = width * 0.9;
+const tabWidth = tabBarWidth / TAB_COUNT;
+
+const slidingWidth = tabWidth * 0.8;
+const slidingMargin = (tabWidth - slidingWidth) / 2;
+
+const CustomTabBar = ({ state, descriptors, navigation }) => {
+  const translateX = useRef(new Animated.Value(state.index * tabWidth + slidingMargin)).current;
+
+  // موقعیت دایره سبز
+  const circleSize = 7;
+  const circleTranslateX = useRef(new Animated.Value(state.index * tabWidth + tabWidth / 2 - circleSize / 2)).current;
+  const circleTranslateY = useRef(new Animated.Value(0)).current;  // برای پرش عمودی
+
+  useEffect(() => {
+    // انیمیشن حرکت sliding background
+    Animated.spring(translateX, {
+      toValue: state.index * tabWidth + slidingMargin,
+      useNativeDriver: true,
+      stiffness: 120,
+      damping: 20,
+    }).start();
+
+    // انیمیشن پرش دایره به صورت قوس‌دار (arc)
+
+    Animated.sequence([
+      Animated.parallel([
+        // بالا رفتن دایره (پرش)
+        Animated.timing(circleTranslateY, {
+          toValue: -5,  // ارتفاع پرش
+          duration: 500,
+          useNativeDriver: true,
+        }),
+        // حرکت افقی به سمت آیتم جدید
+        Animated.timing(circleTranslateX, {
+          toValue: state.index * tabWidth + tabWidth / 2 - circleSize / 2,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]),
+      // پایین آمدن دایره (نشستن روی آیتم)
+      Animated.timing(circleTranslateY, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+  }, [state.index]);
+
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        backgroundColor: '#E6F2EA',
+        borderRadius: 15,
+        width: tabBarWidth,
+        marginBottom: 40,
+        height: 70,
+        elevation: 5,
+        overflow: 'hidden',
+        alignSelf: 'center',
+      }}
+    >
+      {/* Sliding background */}
+      <Animated.View
+        style={{
+          position: 'absolute',
+          width: slidingWidth,
+          height: 50,
+          backgroundColor: '#fff',
+          borderRadius: 15,
+          top: 10,
+          transform: [{ translateX }],
+          zIndex: 0,
+          shadowColor: '#06d6a0',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.15,
+          shadowRadius: 4,
+          elevation: 1,
+        }}
+      />
+
+      {/* دایره سبز با انیمیشن پرش */}
+      <Animated.View
+        style={{
+          position: 'absolute',
+          width: circleSize,
+          height: circleSize,
+          borderRadius: circleSize / 2,
+          backgroundColor: '#06d6a0',
+          top: 5,
+          transform: [
+            { translateX: circleTranslateX },
+            { translateY: circleTranslateY },
+          ],
+          zIndex: 10,
+          elevation: 6,
+          shadowColor: '#06d6a0',
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.7,
+          shadowRadius: 3,
+        }}
+      />
+
+      {/* Tab items */}
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const focused = state.index === index;
+
+        const icon = options.tabBarIconSource;
+        const label = options.tabBarLabel;
+
+        return (
+          <TouchableOpacity
+            key={route.key}
+            onPress={() => navigation.navigate(route.name)}
+            style={{
+              width: tabWidth,
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1,
+            }}
+            activeOpacity={0.7}
+          >
+            <Image
+              source={icon}
+              style={{
+                width: focused ? 24 : 20,
+                height: focused ? 24 : 20,
+                tintColor: focused ? '#06d6a0' : 'grey',
+                marginBottom: 4,
+                resizeMode: 'contain',
+              }}
+            />
+            <Text
+              style={{
+                fontSize: 10,
+                fontFamily: 'morvarid',
+                color: focused ? '#06d6a0' : 'grey',
+                textAlign: 'center',
+              }}
+            >
+              {label}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+};
 
 const Bottom_Tabs = () => {
+  const [fontsLoaded] = useFonts({
+    morvarid: require('../assets/fonts/morvarid.ttf'),
+  });
 
-    const [fontsLoaded] = useFonts({
-        'morvarid': require('../assets/fonts/morvarid.ttf'),
-    });
+  if (!fontsLoaded) return null;
 
-
-    return (
-
-        <Tab.Navigator
-
-            screenOptions={{
-                tabBarShowLabel: false,
-                tabBarStyle: {
-                    
-                    backgroundColor: 'transparent',
-                    borderTopLeftRadius: 15,
-                    borderTopRightRadius: 15,
-                    borderBottomLeftRadius: 15,
-                    borderBottomRightRadius: 15,
-                    elevation: 2,
-                    backgroundColor: '#EEEEEE',
-                    flexWrap: 'wrap',
-                    marginBottom: 30,
-                    marginHorizontal:10,
-                    marginTop: 0,
-                    shadowColor: '#06d6a0'
-
-                }
-            }}
-        >
-            <Tab.Screen name="Home11" component={HomeStackNavigator} options={{
-                headerShown: false
-                , tabBarIcon: ({ focused }) => (
-                    <View style={{width: width * 1.4 / 10, height: '100%', alignItems: 'center',  borderBottomColor: focused ? '#06d6a0' : '#EEEEEE', borderTopColor: focused ? '#06d6a0' : '#EEEEEE', borderTopWidth: 3, borderTopLeftRadius: 10 ,paddingTop:10}}>
-                        <Image source={require('../assets/image/article.png')}
-                            resizeMode='contain'
-                            style={{
-                                width: focused ? '45%' : '40%',
-                                height: focused ? '100%' : '90%',
-
-
-
-                                tintColor: focused ? '#06d6a0' : 'grey',
-                                resizeMode: 'contain',
-
-                            }}
-                        />
-                        <Text style={{ padding: 3, fontFamily: 'morvarid', backgroundColor: focused ? 'white' : '#EEEEEE', borderRadius: 5, height: '50%', width: '90%', textAlign: 'center', textAlignVertical: 'center', marginTop: '15%', color: focused ? '#06d6a0' : 'grey', fontSize: 10, }}>دانشگاه</Text>
-                    </View>
-                )
-            }} />
-
-            <Tab.Screen name="Order11" component={OrderStackNavigator} options={{
-                headerShown: false
-                , tabBarIcon: ({ focused }) => (
-                    <View style={{ width: width * 1.4 / 10, height: '100%', alignItems: 'center',  borderBottomColor: focused ? '#06d6a0' : '#EEEEEE', borderTopColor: focused ? '#06d6a0' : '#EEEEEE', borderTopWidth: 3,paddingTop:10 }}>
-                        <Image source={require('../assets/image/field.png')}
-                            resizeMode='contain'
-                            style={{
-                                width: focused ? '45%' : '40%',
-                                height: focused ? '100%' : '90%',
-
-
-                                tintColor: focused ? '#06d6a0' : 'grey',
-                                resizeMode: 'contain',
-
-                            }}
-                        />
-                        <Text style={{ padding: 3, fontFamily: 'morvarid', backgroundColor: focused ? 'white' : '#EEEEEE', borderRadius: 5, height: '50%', width: '90%', textAlign: 'center', textAlignVertical: 'center', marginTop: '15%', color: focused ? '#06d6a0' : 'grey', fontSize: 10, }}>درمانگاه</Text>
-                    </View>
-
-                ),
-                // tabBarBadge: '1',
-                // tabBarBadgeStyle: { backgroundColor: '#F8E559', fontSize: 9, fontWeight: 'bold', marginTop: 10, color: '#D20062', fontWeight: 'bold' }
-            }} />
-
-
-            {/* <Tab.Screen name="Setting11"  component={SettingStackNavigator} options={{
-                headerShown: false
-            
-                , tabBarIcon: ({ focused }) => (
-                    <View style={{ width: width * 1.76 / 10, height: '90%', alignItems: 'center', justifyContent: 'center',marginBottom:50,borderRadius:200,backgroundColor:'#EEEEEE',elevation:10,shadowColor:'#06d6a0' ,borderWidth:2,borderColor:'#EEEEEE'}}>
-                        <Image source={require('../assets/image/hearticon1.gif')}
-                            resizeMode='contain'
-                            style={{
-                                width:  focused ? '45%' : '40%',
-                                height: focused ? '45%' : '40%',
-
-
-                                tintColor: focused ? '#06d6a0' : 'grey',
-                                resizeMode: 'contain',
-
-                            }}
-                        />
-                        <Text style={{ height: '40%', width: '100%', textAlign: 'center', textAlignVertical: 'center', marginTop: '5%', color: focused ? '#06d6a0' : 'grey', fontSize: 10, fontWeight: '900' }}>صفحه من</Text>
-                    </View>
-
-                )
-            }} /> */}
-
-            <Tab.Screen name="Osce11" component={OsceStackNavigator} options={{
-                headerShown: false
-                , tabBarIcon: ({ focused }) => (
-                    <View style={{ width: width * 1.4 / 10, height: '100%', alignItems: 'center', borderBottomColor: focused ? '#06d6a0' : '#EEEEEE', borderTopColor: focused ? '#06d6a0' : '#EEEEEE', borderTopWidth: 3, paddingTop:10}}>
-                        <Image source={require('../assets/image/ambulance1.png')}
-                            resizeMode='contain'
-                            style={{
-                                width: focused ? '45%' : '40%',
-                                height: focused ? '100%' : '90%',
-
-
-                                tintColor: focused ? '#06d6a0' : 'grey',
-                                resizeMode: 'contain',
-
-                            }}
-                        />
-                        <Text style={{ padding: 3, fontFamily: 'morvarid', backgroundColor: focused ? 'white' : '#EEEEEE', borderRadius: 5, height: '50%', width: '90%', textAlign: 'center', textAlignVertical: 'center', marginTop: '15%', color: focused ? '#06d6a0' : 'grey', fontSize: 9, }}>مهارت های بالینی</Text>
-                    </View>
-
-                ),
-                // tabBarBadge: '1',
-                // tabBarBadgeStyle: { backgroundColor: '#F8E559', fontSize: 9, fontWeight: 'bold', marginTop: 10, color: '#D20062', fontWeight: 'bold' }
-            }} />
-
-
-
-
-
-            <Tab.Screen name="Drug11" component={PostStackNavigator} options={{
-                headerShown: false
-                , tabBarIcon: ({ focused }) => (
-                    <View style={{ width: width * 1.4 / 10, height: '100%', alignItems: 'center',  borderBottomColor: focused ? '#06d6a0' : '#EEEEEE', borderTopColor: focused ? '#06d6a0' : '#EEEEEE', borderTopWidth: 3, paddingTop:10}}>
-                        <Image source={require('../assets/image/drug.png')}
-                            resizeMode='contain'
-                            style={{
-                                width: focused ? '45%' : '40%',
-                                height: focused ? '100%' : '90%',
-
-
-                                tintColor: focused ? '#06d6a0' : 'grey',
-                                resizeMode: 'contain',
-
-                            }}
-                        />
-                        <Text style={{ padding: 3, fontFamily: 'morvarid', backgroundColor: focused ? 'white' : '#EEEEEE', borderRadius: 5, height: '50%', width: '90%', textAlign: 'center', textAlignVertical: 'center', marginTop: '15%', color: focused ? '#06d6a0' : 'grey', fontSize: 10, }}>داروخانه</Text>
-                    </View>
-
-                ),
-                // tabBarBadge: '1',
-                // tabBarBadgeStyle: { backgroundColor: '#F8E559', fontSize: 9, fontWeight: 'bold', marginTop: 10, color: '#D20062', fontWeight: 'bold' }
-            }} />
-
-
-
-            <Tab.Screen name="Diagnose11" component={DiagnoseStackNavigator} options={{
-                headerShown: false
-                , tabBarIcon: ({ focused }) => (
-                    <View style={{ width: width * 1.4 / 10, height: '100%', alignItems: 'center', borderTopColor: focused ? '#06d6a0' : '#EEEEEE', borderTopWidth: 3, borderTopRightRadius: 0 ,paddingTop:10}}>
-                        <Image source={require('../assets/image/tabib.png')}
-                            resizeMode='contain'
-                            style={{
-                                width: focused ? '45%' : '40%',
-                                height: focused ? '100%' : '90%',
-
-
-                                tintColor: focused ? '#06d6a0' : 'grey',
-                                resizeMode: 'contain',
-
-                            }}
-                        />
-                        <Text style={{ padding: 3, fontFamily: 'morvarid', backgroundColor: focused ? 'white' : '#EEEEEE', borderRadius: 5, height: '50%', width: '90%', textAlign: 'center', textAlignVertical: 'center', marginTop: '15%', color: focused ? '#06d6a0' : 'grey', fontSize: 9, }}>تشخیص افتراقی</Text>
-                    </View>
-
-                )
-
-            }} />
-
-            <Tab.Screen name="Setting11" component={SettingStackNavigator} options={{
-                headerShown: false
-                , tabBarIcon: ({ focused }) => (
-                    <View style={{ width: width * 1.4 / 10, height: '100%', alignItems: 'center', borderTopColor: focused ? '#06d6a0' : '#EEEEEE', borderTopWidth: 3, borderTopRightRadius: 3,paddingTop:10 }}>
-                        <Image source={require('../assets/image/hearticon1.gif')}
-                            resizeMode='contain'
-                            style={{
-                                width: focused ? '45%' : '40%',
-                                height: focused ? '100%' : '90%',
-
-
-                                tintColor: focused ? '#06d6a0' : 'grey',
-                                resizeMode: 'contain',
-
-                            }}
-                        />
-                        <Text style={{ padding: 3, fontFamily: 'morvarid', backgroundColor: focused ? 'white' : '#EEEEEE', borderRadius: 5, height: '50%', width: '90%', textAlign: 'center', textAlignVertical: 'center', marginTop: '15%', color: focused ? '#06d6a0' : 'grey', fontSize: 9, }}>صفحه اصلی</Text>
-                    </View>
-
-                )
-
-            }} />
-
-
-
-
-
-
-
-
-
-
-        </Tab.Navigator>
-    );
-
-}
+  return (
+    <Tab.Navigator tabBar={props => <CustomTabBar {...props} />}>
+      <Tab.Screen
+        name="Home11"
+        component={HomeStackNavigator}
+        options={{
+          tabBarLabel: 'دانشگاه',
+          tabBarIconSource: require('../assets/image/article.png'),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Order11"
+        component={OrderStackNavigator}
+        options={{
+          tabBarLabel: 'درمانگاه',
+          tabBarIconSource: require('../assets/image/field.png'),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Osce11"
+        component={OsceStackNavigator}
+        options={{
+          tabBarLabel: 'اورژانس',
+          tabBarIconSource: require('../assets/image/ambulance1.png'),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Drug11"
+        component={PostStackNavigator}
+        options={{
+          tabBarLabel: 'داروخانه',
+          tabBarIconSource: require('../assets/image/drug.png'),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Diagnose11"
+        component={DiagnoseStackNavigator}
+        options={{
+          tabBarLabel: 'مهارت بالینی',
+          tabBarIconSource: require('../assets/image/tabib.png'),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Setting11"
+        component={SettingStackNavigator}
+        options={{
+          tabBarLabel: 'صفحه اصلی',
+          tabBarIconSource: require('../assets/image/hearticon1.gif'),
+          headerShown: false,
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
 
 export default Bottom_Tabs;
-
-
-

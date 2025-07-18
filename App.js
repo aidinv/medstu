@@ -33,6 +33,11 @@ import Changecontentscreen from './components_admin/changecontentscreen';
 import Changeoscecontentscreen from './components_admin/changeoscecontentscreen';
 import Changecontentdiagnosescreen from './components_admin/changediagnosecontentscreen';
 import Changecontentnoskhescreen from './components_admin/changenoskhecontentscreen';
+import Admin_pharmacy from './components_admin/admin_pharmacy';
+import Add_drugscreen from './components_admin/adddrugscreen';
+import Editdrugscreen from './components_admin/editdrugscreen';
+import Addcontentdrugscreen from './components_admin/addcontentdrugscreen';
+import Newsscreen from './components_news/newsscreen';
 
 const Stack = createStackNavigator();
 
@@ -72,6 +77,13 @@ export default function App() {
           <Stack.Screen name="Addoscefasl" component={Addoscefaslscreen} options={{ headerShown: false }} />
           <Stack.Screen name="Editoscefasl" component={Editoscefaslscreen} options={{ headerShown: false }} />
           <Stack.Screen name="Addoscecontent" component={Addcontentoscescreen} options={{ headerShown: false }} />
+
+          <Stack.Screen name="Adminpharmacy" component={Admin_pharmacy} options={{ headerShown: false }} />
+          <Stack.Screen name="Adddrug1" component={Add_drugscreen} options={{ headerShown: false }} />
+           <Stack.Screen name="Editdrug1" component={Editdrugscreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Adddrugcontent1" component={Addcontentdrugscreen} options={{ headerShown: false }} />
+            <Stack.Screen name="News1" component={Newsscreen} options={{ headerShown: false }} />
+          
          
 
         </Stack.Group>

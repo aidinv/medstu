@@ -1,18 +1,23 @@
+
 import React, { Component } from 'react';
 import {
   ActivityIndicator, FlatList, Text, View, StyleSheet,
   Dimensions, Image, TouchableOpacity, SafeAreaView, TextInput
 } from 'react-native';
+
+
+import { SwipeableFlatList } from 'react-native-swipe-list';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export default class Osce_eye extends Component {
+const width = Dimensions.get('window').width;
+export default class Drugs extends Component {
 
 
 
-  width = Dimensions.get('window').width;
 
   constructor(props) {
     super(props);
+
     this.state = {
       DATA: [],
       isLoading: true,
@@ -22,10 +27,9 @@ export default class Osce_eye extends Component {
     };
   }
 
-
   async getMovies() {
     try {
-      const response = await fetch('https://draydinv.ir/extra/osce_eye.php');
+      const response = await fetch('https://draydinv.ir/extra/drugslist.php');
       const json = await response.json();
       this.setState({ DATA: json });
     } catch (error) {
@@ -51,7 +55,7 @@ export default class Osce_eye extends Component {
     const { DATA, searchQuery, currentPage, itemsPerPage } = this.state;
 
     const filteredData = DATA.filter(item =>
-      item.name_fa.toLowerCase().includes(searchQuery.toLowerCase())
+      item.name1.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -96,7 +100,7 @@ export default class Osce_eye extends Component {
           paddingHorizontal: 30,
           fontFamily: 'morvarid',
         }}>
-          فهرست فصل ها - صفحه  {currentPage}  از  {totalPages}
+          فهرست دارو ها - صفحه  {currentPage}  از  {totalPages}
         </Text>
 
 
@@ -129,18 +133,23 @@ export default class Osce_eye extends Component {
       <Text style={{ fontWeight: '800', color: 'green' }}>محتوایی برای نمایش یافت نشد !</Text>
     </View>
   );
+
+
+
   render() {
     const { isLoading, searchQuery } = this.state;
     const { navigation, username } = this.props;
 
-    const ListItem = ({ text, onPress, text1, likes, view }) => (
+    const ListItem = ({ text, img, onPress, text1, likes, view, cat, code }) => (
       <TouchableOpacity style={styles.item} onPress={onPress} activeOpacity={0.9}>
 
         <View style={{ flexDirection: 'row-reverse' }}>
-          <Image source={require('../assets/image/osce.png')} style={{ width: 30, height: 30, marginLeft: 5, justifyContent: 'center', alignSelf: 'center' }} />
+          <Image source={require('../assets/img/drug6.png')} style={{ width: 30, height: 30, marginLeft: 5, justifyContent: 'center', alignSelf: 'center' }} />
+
           <View>
-            <Text style={styles.text}>{text}</Text>
-            <Text style={styles.text1}>( {text1} )</Text>
+            <Text style={styles.text}>{text}  ( {text1} )</Text>
+            <Text style={styles.text1}>( {cat} )</Text>
+            <Text style={styles.text1}> کد ژنریک  :  {code} </Text>
           </View>
         </View>
         <View style={{ justifyContent: 'space-between' }}>
@@ -157,6 +166,7 @@ export default class Osce_eye extends Component {
             resizeMode='contain'
 
           />
+
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
               <Image
@@ -220,9 +230,15 @@ export default class Osce_eye extends Component {
         ) : (
           <SafeAreaView style={{ flex: 1 }}>
 
+            <View style={{ flexDirection: 'row-reverse', }}>
+              <View style={{ backgroundColor: '#06d6a0', width: 10, height: 10, borderRadius: 3, justifyContent: 'center', alignSelf: 'center', marginRight: 10 }}></View>
+              <Text style={{ marginVertical: 3, fontWeight: '900', color: 'grey', verticalAlign: 'bottom', marginRight: 5, }}> داروخانه</Text>
+           
+            </View>
+
 
             <TextInput
-              placeholder="جستجوی اوردر "
+              placeholder="جستجوی دارو "
               value={searchQuery}
               onChangeText={this.handleSearch}
               style={styles.searchInput}
@@ -235,20 +251,23 @@ export default class Osce_eye extends Component {
                 contentContainerStyle={{ paddingBottom: 80 }}
                 renderItem={({ item }) =>
                   <ListItem
-                    text={item.name_fa}
-                    text1={item.name_en}
+                    text={item.name1}
+                    text1={item.name2}
                     likes={item.likes}
                     view={item.view}
+                    cat={item.cat}
+                    code={item.code}
 
-                    onPress={() => navigation.navigate('Osce1', {
-                      name_en: item.name_en,
-                      name_fa: item.name_fa,
-
-                      cat_fa: item.cat_fa,
+                    onPress={() => navigation.navigate('Post1', {
+                      name1: item.name1,
+                      name2: item.name2,
+                      content: item.content,
+                      cat: item.cat,
                       time: item.time,
                       writer: item.writer,
                       likes: item.likes,
                       username: username,
+                      code: item.code,
                     })}
                   />
                 }
@@ -263,10 +282,10 @@ export default class Osce_eye extends Component {
       </View>
     );
   }
-}
 
 
 
+};
 
 
 

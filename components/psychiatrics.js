@@ -1,30 +1,21 @@
-
-import { NavigationContainer } from '@react-navigation/native';
-
-import React, { Component, useState } from 'react';
-
+import React, { Component } from 'react';
 import {
   ActivityIndicator, FlatList, Text, View, StyleSheet,
-  Dimensions, Image, TouchableOpacity, SafeAreaView
+  Dimensions, Image, TouchableOpacity, SafeAreaView, TextInput
 } from 'react-native';
-
-import { SwipeableFlatList } from 'react-native-swipe-list';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { ScrollView } from 'react-native-virtualized-view';
 
 export default class Psychiatrics extends Component {
-
-  
-
   width = Dimensions.get('window').width;
 
   constructor(props) {
-    
     super(props);
-    
     this.state = {
       DATA: [],
-      isLoading: true
+      isLoading: true,
+      searchQuery: '',
+      currentPage: 1,
+      itemsPerPage: 7,
     };
   }
 
@@ -42,138 +33,304 @@ export default class Psychiatrics extends Component {
 
   componentDidMount() {
     this.getMovies();
-  
   }
-  emptymessage = () => {
+
+  handleSearch = (text) => {
+    this.setState({ searchQuery: text, currentPage: 1 });
+  };
+
+  handlePageChange = (page) => {
+    this.setState({ currentPage: page });
+  };
+
+  getFilteredAndPaginatedData = () => {
+    const { DATA, searchQuery, currentPage, itemsPerPage } = this.state;
+
+    const filteredData = DATA.filter(item =>
+      item.fasl_name_fa.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedData = filteredData.slice(startIndex, endIndex);
+
+    return { paginatedData, totalPages: Math.ceil(filteredData.length / itemsPerPage) };
+  };
+
+  renderPagination = (totalPages) => {
+    const { currentPage } = this.state;
+
     return (
+      <View style={styles.paginationContainer}>
+        <TouchableOpacity
+          style={[styles.pageButton, currentPage === 1 && styles.disabledButton]}
+          onPress={() => {
+            if (currentPage > 1) this.handlePageChange(currentPage - 1);
+          }}
+          disabled={currentPage === 1}
+        >
+          <Image
+            style={{
+              width: 10,
+              height: 10,
+              transform: [{ rotate: '180deg' }],
+              tintColor: 'grey',
+              alignSelf: 'center'
+            }}
+            source={require('../assets/img/next.png')}
+            resizeMode='contain'
 
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-        <Text style={{fontWeight:'800' , color:'green'}}>محتوایی برای نمایش یافت نشد !</Text>
+          />
+        </TouchableOpacity>
+
+        <Text style={{
+          color: 'black',
+          fontWeight: '600',
+          backgroundColor:'#EEEEEE',
+          padding:10,
+          borderRadius:10,
+          paddingHorizontal:30,
+          fontFamily: 'morvarid',
+        }}>
+          فهرست فصل ها - صفحه  {currentPage}  از  {totalPages}
+        </Text>
+
+
+        <TouchableOpacity
+          style={[styles.pageButton, currentPage === totalPages && styles.disabledButton]}
+          onPress={() => {
+            if (currentPage < totalPages) this.handlePageChange(currentPage + 1);
+          }}
+          disabled={currentPage === totalPages}
+        >
+          <Image
+            style={{
+              width: 10,
+              height: 10,
+
+              tintColor: 'grey',
+              alignSelf: 'center'
+            }}
+            source={require('../assets/img/next.png')}
+            resizeMode='contain'
+
+          />
+        </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
 
+  emptymessage = () => (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+      <Text style={{ fontWeight: '800', color: 'green' }}>محتوایی برای نمایش یافت نشد !</Text>
+    </View>
+  );
 
   render() {
-    const { DATA, isLoading } = this.state;
-    const {navigation}=this.props;
-    const {username}=this.props;
-  
-    const ListItem = ({ text,img,onPress}) => (
+    const { isLoading, searchQuery } = this.state;
+    const { navigation, username } = this.props;
+
+    const ListItem = ({ text, img, onPress, text1, likes, view }) => (
       <TouchableOpacity style={styles.item} onPress={onPress} activeOpacity={0.9}>
-        <Image source={{uri:img}} style={{width:30,height:30 ,marginLeft:5}} resizeMode='contain'  />
-        <Text style={styles.text}>{text}</Text>
+
+        <View style={{ flexDirection: 'row-reverse' }}>
+          <Image source={{ uri: img }} style={{ width: 40, height: 40, marginLeft: 5 }} resizeMode='contain' />
+          <View>
+            <Text style={styles.text}>{text}</Text>
+            <Text style={styles.text1}>( {text1} )</Text>
+          </View>
+        </View>
+        <View style={{ justifyContent: 'space-between' }}>
+          <Image
+            style={{
+              width: 12,
+              height: 12,
+              transform: [{ rotate: '180deg' }],
+              tintColor: 'grey',
+              alignSelf: 'flex-start',
+              marginHorizontal:10
+            }}
+            source={require('../assets/img/next.png')}
+            resizeMode='contain'
+
+          />
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row',marginHorizontal:10 }}>
+              <Image
+                style={{
+                  width: 10,
+                  height: 10,
+
+                  tintColor: 'gray',
+                  alignSelf: 'flex-center'
+                }}
+                source={require('../assets/img/view3.png')}
+                resizeMode='contain'
+
+              />
+              <Text style={{
+                color: 'gray',
+                fontSize: 10,
+                textAlignVertical: 'center',
+                fontFamily: 'morvarid',
+                marginLeft:5
+              }}> {view} </Text>
+
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <Image
+                style={{
+                  width: 10,
+                  height: 10,
+
+                  tintColor: 'grey',
+                  alignSelf: 'flex-center'
+                }}
+                source={require('../assets/image/heart1.png')}
+                resizeMode='contain'
+
+              />
+              <Text style={{
+                color: 'grey',
+                fontSize: 10,
+                textAlignVertical: 'center',
+                fontFamily: 'morvarid',
+                marginLeft:5
+              }}> {likes} </Text>
+
+            </View>
+          </View>
+        </View>
+
       </TouchableOpacity>
     );
 
-
-   const SwipeableItem = ({ item }) => (
-        <GestureHandlerRootView>
-          <FlatList
-           nestedScrollEnabled={true}
-            data={item}
-            renderItem={({ item }) =>
-             <ListItem text={item.fasl_name_fa} img={item.img} time={item.time} writer={item.writer}
-             onPress={()=>navigation.navigate('Detail',
-             {fasl_name_en:item.fasl_name_en ,
-              fasl_name_fa:item.fasl_name_fa,
-              img:item.img,
-              cours_fa:item.cours_fa ,
-              time :  item.time,
-              writer : item.writer,
-              likes:item.likes,
-              username:username,
-            })}
-             />}
-          
-            ListEmptyComponent={this.emptymessage}
-          />
-        </GestureHandlerRootView>
-      );
-
+    const { paginatedData, totalPages } = this.getFilteredAndPaginatedData();
 
     return (
-
-      <View style={{ marginTop: 10}}>
-        {isLoading ?
+      <View style={{ flex: 1, marginTop: 10 }}>
+        {isLoading ? (
           <View>
-            <ActivityIndicator size={'large'} color={'#E59BE9'}/>
-            <Text style={{alignSelf:'center',marginTop:5}}>در حال بارگذاری</Text> 
+            <ActivityIndicator size={'large'} color={'#E59BE9'} />
+            <Text style={{ alignSelf: 'center', marginTop: 5 }}>در حال بارگذاری</Text>
           </View>
-          : (
-            <SafeAreaView >
-              <SwipeableItem
-                item={DATA}
-              />
-            </SafeAreaView>
-          )}
-      </View>
+        ) : (
+          <SafeAreaView style={{ flex: 1 }}>
 
+
+            <TextInput
+              placeholder="جستجوی فصل "
+              value={searchQuery}
+              onChangeText={this.handleSearch}
+              style={styles.searchInput}
+            />
+            {this.renderPagination(totalPages)}
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <FlatList
+                nestedScrollEnabled={true}
+                data={paginatedData}
+                contentContainerStyle={{ paddingBottom: 80 }}
+                renderItem={({ item }) =>
+                  <ListItem
+                    text={item.fasl_name_fa}
+                    text1={item.fasl_name_en}
+                    likes={item.likes}
+                    view={item.view}
+                    img={item.img}
+                    onPress={() => navigation.navigate('Detail', {
+                      fasl_name_en: item.fasl_name_en,
+                      fasl_name_fa: item.fasl_name_fa,
+                      img: item.img,
+                      cours_fa: item.cours_fa,
+                      time: item.time,
+                      writer: item.writer,
+                      likes: item.likes,
+                      username: username,
+                    })}
+                  />
+                }
+                keyExtractor={(item, index) => index.toString()}
+                ListEmptyComponent={this.emptymessage}
+              />
+            </GestureHandlerRootView>
+
+
+          </SafeAreaView>
+        )}
+      </View>
     );
   }
-
-
-
-};
-
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-
-    marginTop: 5,
-    marginBottom: 10,
-
-    marginHorizontal: 10
-  },
-  welcome: {
-    fontSize: 14,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 5,
-    marginHorizontal: 0,
-    color: '#2B4865',
-    backgroundColor: '#F5F8FA',
-    padding: 10,
-    borderRadius: 5,
-
-  },
   item: {
-    flexDirection:'row-reverse',
-    backgroundColor: 'white',
-    padding: 8,
-    margin: 5,
-    elevation: 2,
-    borderRadius: 4,
-    borderRightWidth:2,
-    borderRightColor:'#ffdb00',
-    borderLeftWidth:2,
-    borderLeftColor:'#ffdb00',
-    
-
-
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    padding: 10,
+    marginVertical: 4,
+    marginHorizontal: 15,
+    elevation: 1,
+    borderRadius: 7,
+    borderRightWidth: 0,
+    borderRightColor: '',
+    borderLeftWidth: 0,
+    borderLeftColor: '',
   },
   text: {
     fontSize: 15,
-    marginRight:15,
-    textAlign:'center',
+    marginRight: 15,
+    textAlign: 'center',
+    alignSelf: 'center',
+    fontFamily: 'morvarid',
+    color:'green'
 
-    alignSelf:'center'
+
+  }, text1: {
+    fontSize: 10,
+    marginRight: 15,
+    textAlign: 'center',
+    alignSelf: 'center',
+    fontFamily: 'morvarid',
+    color: 'grey',
+    marginTop: 7
+  }
+  , searchInput: {
+   
+    marginVertical: 15,
+    marginHorizontal:25,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical:20,
+    textAlign: 'right'
+  },
+  paginationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginHorizontal: 20,
+    marginVertical: 10,
+  },
+  pageButton: {
+    backgroundColor: '#EEEEEE',
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 6,
 
   },
-  rightAction1: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    margin: 12,
-    marginHorizontal: 5,
-    elevation: 10,
+  disabledButton: {
+    backgroundColor: '#fff',
 
   },
-  actionText: {
-    color: 'black',
-    fontWeight: '700',
-    padding: 20
+  activePage: {
+    backgroundColor: '#E59BE9',
   },
+  pageText: {
+    color: 'grey',
+    fontSize: 5,
+    fontFamily: 'dast',
+
+  }
 });

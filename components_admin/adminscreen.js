@@ -14,6 +14,7 @@ import Admin_osce from './admin_osce';
 
 import { ScrollView } from 'react-native-virtualized-view';
 import Carouseledit from './carouseledit';
+import Admin_pharmacy from './admin_pharmacy';
 
 
 
@@ -122,12 +123,7 @@ export default function Adminscreen({ navigation }) {
                         gamestaba == 1 && <Admin_cours navigation={navigation} />
                     }
                     {
-                        gamestaba == 2 &&
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 50 }} >
-                            <Image source={require('../assets/image/atfal.png')} style={{ width: 60, height: 60, marginLeft: 5 }} />
-                            <Text style={{ fontWeight: '800', color: 'green', textAlign: 'center', marginHorizontal: 50 }}> مدیر محترم</Text>
-                            <Text style={{ fontWeight: '800', color: 'green', textAlign: 'center', marginHorizontal: 50 }}>این قسمت در نسخه های بعدی در دسترس قرار خواهد گرفت</Text>
-                        </View>
+                        gamestaba == 2 && <Admin_pharmacy navigation={navigation} />
                     }
                     {
                         gamestaba == 3 && <Users />

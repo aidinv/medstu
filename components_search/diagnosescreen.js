@@ -289,12 +289,12 @@ export default function Diagnosescreen({ navigation }) {
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {
                         gamestab == 1 &&
-                        <Diagnose_sign navigation={navigation} />
+                        <Diagnose_sign navigation={navigation} username={username}/>
                     }
 
                     {
                         gamestab == 2 &&
-                        <Diagnose_biochemistery navigation={navigation} />
+                        <Diagnose_biochemistery navigation={navigation} username={username}/>
                     }
 
                 </ScrollView>

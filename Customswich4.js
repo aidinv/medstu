@@ -32,10 +32,11 @@ function Customswich_component4({
     return (
 
         <View>
-            <View style={{ flexDirection: 'row-reverse' }}>
-                <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>تشخیص های افتراقی</Text>
-                <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginHorizontal: 3 }}>|  {title}</Text>
-            </View>
+            <View style={{ flexDirection: 'row-reverse',}}>
+                            <View style={{ backgroundColor: '#06d6a0', width: 10, height: 10, borderRadius: 3, justifyContent: 'center', alignSelf: 'center', marginRight: 5 }}></View>
+                            <Text style={{ marginVertical: 10, fontWeight: '900', color: 'grey', verticalAlign: 'bottom', marginRight: 10, }}> مهارت بالینی</Text>
+                            <Text style={{ marginVertical: 10, fontWeight: '900', color: 'grey', verticalAlign: 'bottom', marginHorizontal: 3 }}>|  {title}</Text>
+                        </View>
 
             <View style={{ flexDirection: 'row-reverse', marginVertical: 10, justifyContent: 'space-evenly' }}>
 

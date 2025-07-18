@@ -380,7 +380,7 @@ const Editora = (props) => {
                 {
                     gamestab == 1 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -389,7 +389,7 @@ const Editora = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -413,7 +413,7 @@ const Editora = (props) => {
                 {
                     gamestab == 2 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -422,7 +422,7 @@ const Editora = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -443,7 +443,7 @@ const Editora = (props) => {
                 {
                     gamestab == 3 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -452,7 +452,7 @@ const Editora = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -474,7 +474,7 @@ const Editora = (props) => {
                 {
                     gamestab == 4 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -483,7 +483,7 @@ const Editora = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -504,7 +504,7 @@ const Editora = (props) => {
                 {
                     gamestab == 5 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -513,7 +513,7 @@ const Editora = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -535,7 +535,7 @@ const Editora = (props) => {
                 {
                     gamestab == 6 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -544,7 +544,7 @@ const Editora = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -565,7 +565,7 @@ const Editora = (props) => {
                 {
                     gamestab == 7 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -574,7 +574,7 @@ const Editora = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -596,7 +596,7 @@ const Editora = (props) => {
                 {
                     gamestab == 8 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -605,7 +605,7 @@ const Editora = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -626,7 +626,7 @@ const Editora = (props) => {
                 {
                     gamestab == 9 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -635,7 +635,7 @@ const Editora = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -657,7 +657,7 @@ const Editora = (props) => {
                 {
                     gamestab == 10 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -666,7 +666,7 @@ const Editora = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -687,7 +687,7 @@ const Editora = (props) => {
                 {
                     gamestab == 11 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -696,7 +696,7 @@ const Editora = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -718,7 +718,7 @@ const Editora = (props) => {
                 {
                     gamestab == 12 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -728,7 +728,7 @@ const Editora = (props) => {
                             readOnly={true}
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}

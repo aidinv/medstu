@@ -218,10 +218,8 @@ export default function Homescreen({ navigation }) {
                 {/* Header Section */}
                 <View style={styles.header}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Pressable onPress={toggleAccordion3}>
-                            <Image resizeMode='contain' source={require('./assets/image/bag.png')} style={styles.icon} />
-                        </Pressable>
-                        <Pressable onPress={toggleAccordion4}>
+                       
+                        <Pressable onPress={() => navigation.navigate('News1')}>
                             <Image resizeMode='contain' source={require('./assets/image/message.png')} style={styles.icon} />
                         </Pressable>
                     </View>
@@ -292,7 +290,7 @@ export default function Homescreen({ navigation }) {
                     </View>
                 )}
 
-                {/* Accordion 4 Content */}
+                Accordion 4 Content
                 {isOpen4 && (
                     <View
                         style={{ flexDirection: 'row', justifyContent: 'flex-end', width: width * 9.5 / 10, marginTop: 5, padding: 5 }}
@@ -312,8 +310,7 @@ export default function Homescreen({ navigation }) {
             </View>
 
 
-            {/* <TextInput style={{ padding: 15, marginTop: 20, alignSelf: 'center', width: width * 4.65 / 5, borderRadius: 15, paddingHorizontal: 10, direction: 'rtl', borderColor: 'purple', borderWidth: 1, textAlign: 'right', color: 'purple' }} placeholder=' عبارتی را برای جست وجو وارد کنید' ></TextInput>
-             */}
+           
             <View style={{ marginTop: 10 }}>
                 <Customswich_component selectionmode={18} onselectswitch={onselectswich} />
 

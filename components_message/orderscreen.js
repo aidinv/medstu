@@ -304,54 +304,54 @@ export default function Orderscreen({ navigation }) {
 
                     {
                         gamestab == 1 &&
-                        <Noskhe_dakheli navigation={navigation} />
+                        <Noskhe_dakheli navigation={navigation} username={username}/>
                     }
                     {
                         gamestab == 2 &&
-                        <Noskhe_atfal navigation={navigation} />
+                        <Noskhe_atfal navigation={navigation} username={username}/>
                     }
                     {
                         gamestab == 3 &&
-                        <Noskhe_infection navigation={navigation} />
+                        <Noskhe_infection navigation={navigation} username={username}/>
                     }
                     {
                         gamestab == 4 &&
-                        <Noskhe_gyneacology navigation={navigation} />
+                        <Noskhe_gyneacology navigation={navigation} username={username}/>
                     }
 
 
                     {
                         gamestab == 5 &&
-                        <Noskhe_urology navigation={navigation} />
+                        <Noskhe_urology navigation={navigation} username={username}/>
                     }
                     {
                         gamestab == 6 &&
-                        <Noskhe_skin navigation={navigation} />
+                        <Noskhe_skin navigation={navigation} username={username}/>
                     }
                     {
                         gamestab == 7 &&
-                        <Noskhe_psychiatrics navigation={navigation} />
+                        <Noskhe_psychiatrics navigation={navigation} username={username}/>
                     }
                     {
                         gamestab == 8 &&
-                        <Noskhe_ent navigation={navigation} />
+                        <Noskhe_ent navigation={navigation} username={username}/>
                     }
 
                     {
                         gamestab == 9 &&
-                        <Noskhe_eye navigation={navigation} />
+                        <Noskhe_eye navigation={navigation} username={username}/>
                     }
                     {
                         gamestab == 10 &&
-                        <Noskhe_neurology navigation={navigation} />
+                        <Noskhe_neurology navigation={navigation}  username={username}/>
                     }
                     {
                         gamestab == 11 &&
-                        <Noskhe_poison navigation={navigation} />
+                        <Noskhe_poison navigation={navigation} username={username} />
                     }
                     {
                         gamestab == 12 &&
-                        <Noskhe_append navigation={navigation} />
+                        <Noskhe_append navigation={navigation} username={username}/>
                     }
 
 

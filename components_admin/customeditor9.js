@@ -3,13 +3,11 @@ import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text, Platform, 
 import WebView from 'react-native-webview';
 import Customswich_component8 from '../Customswich8';
 
-
-
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 
 
-const Editord = (props) => {
+const Editork = (props) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [htmlContent, setHtmlContent] = useState('');
@@ -19,75 +17,81 @@ const Editord = (props) => {
     }
 
     const height = Dimensions.get('window').height;
+    const width = Dimensions.get('window').width;
+
+
+
+
+    const [image, setImage] = useState(null);
 
     const pickImage = async () => {
-        // درخواست دسترسی به گالری
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-            Alert.alert("خطا", "دسترسی به گالری لازم است.");
-            return;
-        }
-
-        // انتخاب تصویر
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            quality: 1,
-        });
-
-        if (!result.canceled) {
-            const imageUri = result.assets[0].uri;
-            uploadImage(imageUri);
-        }
+      // گرفتن تصویر از گالری
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: false,
+        quality: 1,
+      });
+  
+      console.log(result);
+  
+      if (!result.canceled) {
+        setImage(result.assets[0].uri);
+        // ارسال تصویر به سرور
+        uploadImage(result.assets[0].uri);
+      }
     };
-
-    const uploadImage = async (imageUri) => {
-        try {
-            const formData = new FormData();
-            const imageName = imageUri.split("/").pop(); // نام فایل
-            formData.append("file", {
-                uri: imageUri,
-                name: imageName,
-                type: "image/jpeg", // یا نوع فایل مناسب
-            });
-
-            // ارسال تصویر به سرور
-            const response = await fetch("https://draydinv.ir/extra/imageupload2.php", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-
-            const data = await response.json();
-            if (response.ok && data.imageUrl) {
-                addImageToHtml(data.imageUrl);
-            } else {
-                Alert.alert("خطا", "آپلود تصویر ناموفق بود.");
-            }
-        } catch (error) {
-            console.error(error);
-            Alert.alert("خطا", "مشکلی پیش آمد.");
+  
+    const uploadImage = async (uri) => {
+      const formData = new FormData();
+      const localUri = uri;
+      const filename = localUri.split('/').pop();
+      const type = `image/${filename.split('.').pop()}`;
+      const imageFile = {
+        uri: localUri,
+        name: filename,
+        type: type,
+      };
+      
+      formData.append('file', imageFile);
+  
+      try {
+        let response = await fetch('https://draydinv.ir/extra/uploader.php', {
+          method: 'POST',
+          body: formData,
+        });
+        
+        let result = await response.json();
+        
+        if (response.ok) {
+            addImageToHtml(result.imageUrl);
+        } else {
+          Alert.alert('Image upload failed!', result.message);
         }
+      } catch (error) {
+        console.error(error);
+        Alert.alert('Error', 'There was an error uploading the image.');
+      }
     };
 
     const addImageToHtml = (imageUrl) => {
-            let newHtmlContent = `${htmlContent}<img src="${imageUrl}" alt="Uploaded Image" style="width:100vw;border-radius:10px ; height:100vw;"/>`;
-            setHtmlContent(newHtmlContent);
+        let newHtmlContent = `${htmlContent}<img src="${imageUrl}" alt="Uploaded Image" style="width:95vw;border-radius:10px ; height:100vw;"/>`;
+        setHtmlContent(newHtmlContent);
     };
+
+
 
     const handleaddcontent = () => {
 
 
 
-        fetch('https://draydinv.ir/extra/addoscecontent.php', {
+        fetch('https://draydinv.ir/extra/adddrugscontent.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
             },
             body: JSON.stringify({
 
-                name_fa: props.name_fa,
+                name1: props.name1,
                 subject: props.subject,
                 content: htmlContent,
 
@@ -344,11 +348,11 @@ const Editord = (props) => {
     const dotPosition = Animated.divide(scrollX, width);
 
     return (
-        <View style={{ height:height,marginTop: 30, marginHorizontal: 5, marginBottom: 60 }} showsVerticalScrollIndicator={false}>
+        <View style={{ height: height, marginTop: 30, marginHorizontal: 5, marginBottom: 60 }} showsVerticalScrollIndicator={false}>
 
             <View style={{ flexDirection: 'row-reverse', justifyContent: 'center', alignSelf: 'center' }}>
                 <Text style={{ marginVertical: 3, fontWeight: '600', color: '#06d6a0', verticalAlign: 'bottom', marginRight: 10, justifyContent: 'center', alignSelf: 'center' }}>   ویرایش مبحث {props.subject}</Text>
-                <Text style={{ marginVertical: 3, fontWeight: '600', color: '#06d6a0', verticalAlign: 'bottom', marginHorizontal: 3, justifyContent: 'center', alignSelf: 'center' }}>از فصل {props.fasl_name_fa} </Text>
+                <Text style={{ marginVertical: 3, fontWeight: '600', color: '#06d6a0', verticalAlign: 'bottom', marginHorizontal: 3, justifyContent: 'center', alignSelf: 'center' }}>از داروی {props.name1} </Text>
             </View>
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -376,7 +380,7 @@ const Editord = (props) => {
                 {
                     gamestab == 1 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -385,7 +389,7 @@ const Editord = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -409,7 +413,7 @@ const Editord = (props) => {
                 {
                     gamestab == 2 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -418,7 +422,7 @@ const Editord = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -439,7 +443,7 @@ const Editord = (props) => {
                 {
                     gamestab == 3 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -479,7 +483,7 @@ const Editord = (props) => {
                             placeholder=""
                         />
 
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}> محتوای پاراگراف را وارد کنید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}> محتوای پاراگراف را وارد کنید:</Text>
 
                         <TextInput
                             style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
@@ -500,7 +504,7 @@ const Editord = (props) => {
                 {
                     gamestab == 5 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -561,7 +565,7 @@ const Editord = (props) => {
                 {
                     gamestab == 7 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -653,7 +657,7 @@ const Editord = (props) => {
                 {
                     gamestab == 10 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -683,7 +687,7 @@ const Editord = (props) => {
                 {
                     gamestab == 11 &&
                     <View>
-                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
 
                         <TextInput
                             style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
@@ -711,8 +715,7 @@ const Editord = (props) => {
                     </View>
                 }
 
-
-{
+                {
                     gamestab == 12 &&
                     <View>
                         <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10,alignSelf:'flex-end'  }}>عنوان پاراگراف را بنویسید:</Text>
@@ -750,7 +753,6 @@ const Editord = (props) => {
 
 
 
-
             </View>
 
 
@@ -762,10 +764,10 @@ const Editord = (props) => {
 
 
 
-                {isweb ? (<iframe srcDoc={pre3 + htmlContent + pre4} style={{ border: 'none', width: '100%', minHeight:200, paddingBottom: 0, marginBottom: 0 }} width={width} />) : (
+                {isweb ? (<iframe srcDoc={pre3 + htmlContent + pre4} style={{ border: 'none', width: '100%', minHeight: 200, paddingBottom: 0, marginBottom: 0 }} width={width} />) : (
                     <WebView
-                       
-                        style={{ width: '98%',minHeight:200, alignSelf: 'center', backgroundColor: 'transparent' }}
+
+                        style={{ width: '98%', minHeight: 200, alignSelf: 'center', backgroundColor: 'transparent' }}
                         originWhitelist={['*']}
                         source={{ html: htmlContent }}
                         scalesPageToFit={false}
@@ -846,6 +848,17 @@ const styles = StyleSheet.create({
 
 
     },
+    button: {
+        backgroundColor: '#06d6a0',
+        padding: 15,
+        borderRadius: 8,
+        marginVertical: 10,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
 });
 
-export default Editord;
+export default Editork;

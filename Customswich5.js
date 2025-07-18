@@ -60,7 +60,7 @@ function Customswich_component5({
         <View>
            <View style={{ flexDirection: 'row-reverse',}}>
                 <View style={{ backgroundColor: '#06d6a0', width: 10, height: 10, borderRadius: 3, justifyContent: 'center', alignSelf: 'center', marginRight: 5 }}></View>
-                <Text style={{ marginVertical: 10, fontWeight: '900', color: 'grey', verticalAlign: 'bottom', marginRight: 10, }}> مهارت های بالینی و اورژانس</Text>
+                <Text style={{ marginVertical: 10, fontWeight: '900', color: 'grey', verticalAlign: 'bottom', marginRight: 10, }}>   اورژانس</Text>
                 <Text style={{ marginVertical: 10, fontWeight: '900', color: 'grey', verticalAlign: 'bottom', marginHorizontal: 3 }}>|  {title}</Text>
             </View>
             <ScrollView
@@ -384,8 +384,8 @@ const styles = StyleSheet.create({
 
     },
     dot: {
-        height: 2,
-        width: 100,
+        height: 5,
+        width: 5,
         marginHorizontal:3,
         borderRadius: 20,
         backgroundColor: '#06d6a0',
