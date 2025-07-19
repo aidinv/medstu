@@ -794,6 +794,7 @@ const Editorb = (props) => {
 
     );
 };
+const  width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     container: {

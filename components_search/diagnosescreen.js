@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View,Pressable, Flatlist, Text, SafeAreaView, Dimensions, TouchableOpacity, ImageBackground, TextInput, Image, Button, StyleSheet } from 'react-native';
+import { View, Pressable, Flatlist, Text, SafeAreaView, Dimensions, TouchableOpacity, ImageBackground, TextInput, Image, Button, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Customswich_component4 from '../Customswich4';
 import Diagnose_sign from './diagnose_sign';
 import Diagnose_biochemistery from './diagnose_biochemistery';
+
+
+
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 import { ScrollView } from 'react-native-virtualized-view';
 
@@ -19,6 +24,8 @@ export default function Diagnosescreen({ navigation }) {
     const onselectswich = (value) => {
         setgamestab(value);
     }
+
+    const [unreadCount, setUnreadCount] = useState(0);
 
     const [isOpen2, setIsOpen2] = useState(false);
     const [isOpen3, setIsOpen3] = useState(false);
@@ -44,105 +51,128 @@ export default function Diagnosescreen({ navigation }) {
     };
 
 
-    
+
     const styles = StyleSheet.create({
         container: {
-          width: width * 9.5 / 10,
-          borderRadius: 10,
-          marginTop: 20,
-          backgroundColor: '#EEEEEE',
-          elevation: 2,
-          alignSelf: 'center',
+            width: width * 9.5 / 10,
+            borderRadius: 10,
+            marginTop: 20,
+            backgroundColor: '#EEEEEE',
+            elevation: 2,
+            alignSelf: 'center',
         },
         header: {
-          justifyContent: 'space-between',
-          borderBottomWidth: 0,
-          borderBottomColor: 'white',
-          paddingBottom: 0,
-          flexDirection: 'row',
+            justifyContent: 'space-between',
+            borderBottomWidth: 0,
+            borderBottomColor: 'white',
+            paddingBottom: 0,
+            flexDirection: 'row',
         },
         icon: {
-          height: 50,
-          width: 50,
-          borderRadius: 10,
-          backgroundColor: '#ffffff',
-          margin: 5,
+            height: 50,
+            width: 50,
+            borderRadius: 10,
+            backgroundColor: '#ffffff',
+            margin: 5,
         },
         greetingContainer: {
-          flexDirection: 'row-reverse',
-          justifyContent: 'center',
+            flexDirection: 'row-reverse',
+            justifyContent: 'center',
         },
         greetingText: {
-          color: 'grey',
-          fontSize: 14,
-          marginTop: 10,
-          textAlign: 'center',
-          textAlignVertical: 'center',
-          padding: 5,
-          fontFamily: 'dast',
+            color: 'grey',
+            fontSize: 14,
+            marginTop: 10,
+            textAlign: 'center',
+            textAlignVertical: 'center',
+            padding: 5,
+            fontFamily: 'dast',
         },
         likeIcon: {
-          borderRadius: 10,
-          width: 20,
-          alignSelf: 'center',
+            borderRadius: 10,
+            width: 20,
+            alignSelf: 'center',
         },
         scrollView: {
-          alignSelf: 'center',
-          flexDirection:'row'
+            alignSelf: 'center',
+            flexDirection: 'row'
         },
         scrollViewContent: {
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          width: width * 9.5 / 10,
-          marginTop: 5,
-          padding: 5,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: width * 9.5 / 10,
+            marginTop: 5,
+            padding: 5,
         },
         scrollItem: {
-          elevation: 0,
-          backgroundColor: 'transparent',
-          borderRadius: 8,
-          width: width * 9 / 77,
-          marginHorizontal: width / 77,
-          padding: 8,
+            elevation: 0,
+            backgroundColor: 'transparent',
+            borderRadius: 8,
+            width: width * 9 / 77,
+            marginHorizontal: width / 77,
+            padding: 8,
         },
         iconContainer: {
-          alignItems: 'center',
-          justifyContent: 'center',
+            alignItems: 'center',
+            justifyContent: 'center',
         },
         scrollItemsRow: {
-          flexDirection: 'row',
-          borderTopColor: 'white',
-          borderTopWidth: 1,
+            flexDirection: 'row',
+            borderTopColor: 'white',
+            borderTopWidth: 1,
         },
         messageItem: {
-          backgroundColor: 'transparent',
-          flexDirection: 'row',
-          borderTopColor: 'white',
-          borderTopWidth: 1,
-          width: width * 9 / 10,
+            backgroundColor: 'transparent',
+            flexDirection: 'row',
+            borderTopColor: 'white',
+            borderTopWidth: 1,
+            width: width * 9 / 10,
         },
         messageImage: {
-          height: 75,
-          width: width * 2.5 / 9,
+            height: 75,
+            width: width * 2.5 / 9,
         },
         messageTextContainer: {
-          backgroundColor: 'transparent',
-          width: width * 5.5 / 9,
-          paddingTop: 10,
+            backgroundColor: 'transparent',
+            width: width * 5.5 / 9,
+            paddingTop: 10,
         },
         messageText: {
-          textAlign: 'right',
-          fontFamily: 'dast',
-          fontSize: 20,
-          color: 'green',
+            textAlign: 'right',
+            fontFamily: 'dast',
+            fontSize: 20,
+            color: 'green',
         },
         messageSubText: {
-          textAlign: 'right',
-          fontFamily: 'dast',
-          fontSize: 16,
-          marginTop: 5,
+            textAlign: 'right',
+            fontFamily: 'dast',
+            fontSize: 16,
+            marginTop: 5,
         },
-      });
+    });
+
+    const fetchUnreadCount = async (storedusername) => {
+        try {
+            const response = await fetch('http://draydinv.ir/extra/userdata.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: storedusername,
+
+                }),
+            });
+            const data = await response.json();
+            if (data[0].unread !== undefined) {
+                setUnreadCount(data[0].unread);
+            }
+        } catch (error) {
+            console.error('Error fetching unread count:', error);
+        }
+    };
+
+
 
     useEffect(() => {
         const loadusername = async () => {
@@ -159,13 +189,14 @@ export default function Diagnosescreen({ navigation }) {
                         },
                         body: JSON.stringify({
                             username: storedusername,
-                            func: 'diagnose'
+                            func: 'cours'
                         }),
                     })
                         .then(response => response.json())
                         .then((data) => {
                             setactive(data.status)
-                        })
+                        });
+                    fetchUnreadCount(storedusername);
                 }
             } catch (error) {
                 console.error('erroe', error);
@@ -174,23 +205,51 @@ export default function Diagnosescreen({ navigation }) {
         loadusername();
     }, []);
 
+    useFocusEffect(
+        useCallback(() => {
+            if (username) {
+                fetchUnreadCount(username);
+            }
+        }, [username])
+    );
+
+
 
     return (
 
 
-        <View style={{ flex: 1,marginTop:15 }}>
+        <View style={{ flex: 1, marginTop: 15 }}>
 
             <View style={styles.container}>
 
                 {/* Header Section */}
                 <View style={styles.header}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Pressable onPress={toggleAccordion3}>
-                            <Image resizeMode='contain' source={require('../assets/image/bag.png')} style={styles.icon} />
-                        </Pressable>
-                        <Pressable onPress={toggleAccordion4}>
-                            <Image resizeMode='contain' source={require('../assets/image/message.png')} style={styles.icon} />
-                        </Pressable>
+
+                        <View style={{ position: 'relative' }}>
+                            <Pressable onPress={() => navigation.navigate('News1')}>
+                                <Image resizeMode='contain' source={require('../assets/image/message.png')} style={styles.icon} />
+                            </Pressable>
+                            {unreadCount > 0 && (
+                                <View style={{
+                                    position: 'absolute',
+                                    right: -5,
+                                    top: 5,
+                                    backgroundColor: '#06d6a0',
+                                    borderRadius: 100,
+                                    paddingHorizontal: 5,
+                                    paddingVertical: 2,
+                                    elevation: 10,
+                                    shadowColor: '#06d6a0',
+                                    alignItems: 'center',
+
+                                    justifyContent: 'center',
+                                }}>
+                                    <Text style={{ color: 'white', fontSize: 12, fontFamily: 'morvarid', textAlign: 'center', }}>  {unreadCount}  </Text>
+                                </View>
+                            )}
+                        </View>
+
                     </View>
 
                     {/* Greeting Section */}
@@ -289,12 +348,12 @@ export default function Diagnosescreen({ navigation }) {
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {
                         gamestab == 1 &&
-                        <Diagnose_sign navigation={navigation} username={username}/>
+                        <Diagnose_sign navigation={navigation} username={username} />
                     }
 
                     {
                         gamestab == 2 &&
-                        <Diagnose_biochemistery navigation={navigation} username={username}/>
+                        <Diagnose_biochemistery navigation={navigation} username={username} />
                     }
 
                 </ScrollView>

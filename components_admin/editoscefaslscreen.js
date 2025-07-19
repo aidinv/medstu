@@ -291,7 +291,7 @@ export default class Editoscefaslscreen extends Component {
 
 };
 
-
+const  width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     container: {

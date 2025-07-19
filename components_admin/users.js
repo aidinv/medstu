@@ -17,7 +17,7 @@ export default class Users extends Component {
 
 
 
-    width = Dimensions.get('window').width;
+ 
 
     constructor(props) {
 
@@ -232,6 +232,8 @@ export default class Users extends Component {
 
 };
 
+const   width = Dimensions.get('window').width;
+const   height = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
 

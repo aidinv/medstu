@@ -3,7 +3,8 @@ import { View, Pressable, Flatlist, Text, SafeAreaView, Dimensions, TouchableOpa
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Customswich_component from './Customswich';
 
-
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 
 import Gyneacology from './components/gyneacology';
@@ -50,6 +51,8 @@ export default function Homescreen({ navigation }) {
         setgamestab(value);
     }
 
+    const [unreadCount, setUnreadCount] = useState(0);
+
     const [isOpen2, setIsOpen2] = useState(false);
     const [isOpen3, setIsOpen3] = useState(false);
     const [isOpen4, setIsOpen4] = useState(false);
@@ -74,6 +77,41 @@ export default function Homescreen({ navigation }) {
     };
 
 
+    const fetchNewsCount = async () => {
+        try {
+            const response = await fetch('https://draydinv.ir/extra/news.php');
+            const data = await response.json();
+            return data.count; // فرض: API مقدار news را با کلید count برمی‌گرداند
+        } catch (error) {
+            console.error("خطا در دریافت تعداد اخبار:", error);
+            return null;
+        }
+    };
+
+
+    const fetchUnreadCount = async (storedusername) => {
+        try {
+            const response = await fetch('http://draydinv.ir/extra/userdata.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: storedusername,
+
+                }),
+            });
+            const data = await response.json();
+            if (data[0].unread !== undefined) {
+                setUnreadCount(data[0].unread);
+            }
+        } catch (error) {
+            console.error('Error fetching unread count:', error);
+        }
+    };
+
+
+
     useEffect(() => {
         const loadusername = async () => {
 
@@ -95,7 +133,8 @@ export default function Homescreen({ navigation }) {
                         .then(response => response.json())
                         .then((data) => {
                             setactive(data.status)
-                        })
+                        });
+                    fetchUnreadCount(storedusername);
                 }
             } catch (error) {
                 console.error('erroe', error);
@@ -103,6 +142,17 @@ export default function Homescreen({ navigation }) {
         }
         loadusername();
     }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            if (username) {
+                fetchUnreadCount(username);
+            }
+        }, [username])
+    );
+
+
+
 
 
     const styles = StyleSheet.create({
@@ -205,9 +255,6 @@ export default function Homescreen({ navigation }) {
     });
 
 
-
-
-
     return (
 
         <View style={{ flex: 1, marginTop: 15 }}>
@@ -218,10 +265,31 @@ export default function Homescreen({ navigation }) {
                 {/* Header Section */}
                 <View style={styles.header}>
                     <View style={{ flexDirection: 'row' }}>
-                       
-                        <Pressable onPress={() => navigation.navigate('News1')}>
-                            <Image resizeMode='contain' source={require('./assets/image/message.png')} style={styles.icon} />
-                        </Pressable>
+
+                        <View style={{ position: 'relative' }}>
+                            <Pressable onPress={() => navigation.navigate('News1')}>
+                                <Image resizeMode='contain' source={require('./assets/image/message.png')} style={styles.icon} />
+                            </Pressable>
+                            {unreadCount > 0 && (
+                                <View style={{
+                                    position: 'absolute',
+                                    right: -5,
+                                    top: 5,
+                                    backgroundColor: '#06d6a0',
+                                    borderRadius: 100 ,
+                                    paddingHorizontal: 5,
+                                    paddingVertical: 2,
+                                    elevation:10,
+                                    shadowColor:'#06d6a0',
+                                    alignItems: 'center',
+                                    
+                                    justifyContent: 'center',
+                                }}>
+                                    <Text style={{ color: 'white', fontSize: 12, fontFamily:'morvarid',textAlign:'center',}}>  {unreadCount}  </Text>
+                                </View>
+                            )}
+                        </View>
+
                     </View>
 
                     {/* Greeting Section */}
@@ -310,13 +378,13 @@ export default function Homescreen({ navigation }) {
             </View>
 
 
-           
+
             <View style={{ marginTop: 10 }}>
                 <Customswich_component selectionmode={18} onselectswitch={onselectswich} />
 
             </View>
 
-          
+
 
             {active == 1 ? (
                 <ScrollView showsVerticalScrollIndicator={false}>

@@ -15,6 +15,7 @@ import Admin_osce from './admin_osce';
 import { ScrollView } from 'react-native-virtualized-view';
 import Carouseledit from './carouseledit';
 import Admin_pharmacy from './admin_pharmacy';
+import Admin_news from './admin_news';
 
 
 
@@ -136,6 +137,9 @@ export default function Adminscreen({ navigation }) {
                     }
                     {
                         gamestaba == 6 && <Admin_osce navigation={navigation} />
+                    } 
+                    {
+                        gamestaba == 7 && <Admin_news navigation={navigation} />
                     } 
                 </ScrollView>
 

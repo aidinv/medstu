@@ -291,7 +291,7 @@ export default class Editfaslscreen extends Component {
 
 };
 
-
+const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     container: {

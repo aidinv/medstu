@@ -29,7 +29,7 @@ function Customswich_component6({
         }else if(value===6){
             settitle('مهارت بالینی');
         }else if(value===7){
-            settitle('اسلایدر ');
+            settitle('اخبار و اسلایدر');
         }
        
     }

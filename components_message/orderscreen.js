@@ -18,6 +18,8 @@ import Noskhe_append from './noskhe_append';
 import Noskhe_poison from './noskhe_poison';
 
 
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 
 export default function Orderscreen({ navigation }) {
@@ -31,7 +33,7 @@ export default function Orderscreen({ navigation }) {
         setgamestab(value);
     }
 
-
+    const [unreadCount, setUnreadCount] = useState(0);
     const [isOpen2, setIsOpen2] = useState(false);
     const [isOpen3, setIsOpen3] = useState(false);
     const [isOpen4, setIsOpen4] = useState(false);
@@ -157,6 +159,29 @@ export default function Orderscreen({ navigation }) {
     });
 
 
+    const fetchUnreadCount = async (storedusername) => {
+        try {
+            const response = await fetch('http://draydinv.ir/extra/userdata.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: storedusername,
+
+                }),
+            });
+            const data = await response.json();
+            if (data[0].unread !== undefined) {
+                setUnreadCount(data[0].unread);
+            }
+        } catch (error) {
+            console.error('Error fetching unread count:', error);
+        }
+    };
+
+
+
     useEffect(() => {
         const loadusername = async () => {
 
@@ -172,13 +197,14 @@ export default function Orderscreen({ navigation }) {
                         },
                         body: JSON.stringify({
                             username: storedusername,
-                            func: 'diagnose'
+                            func: 'cours'
                         }),
                     })
                         .then(response => response.json())
                         .then((data) => {
                             setactive(data.status)
-                        })
+                        });
+                    fetchUnreadCount(storedusername);
                 }
             } catch (error) {
                 console.error('erroe', error);
@@ -187,6 +213,14 @@ export default function Orderscreen({ navigation }) {
         loadusername();
     }, []);
 
+    useFocusEffect(
+        useCallback(() => {
+            if (username) {
+                fetchUnreadCount(username);
+            }
+        }, [username])
+    );
+
     return (
 
         <View style={{ flex: 1, marginTop: 15 }}>
@@ -194,14 +228,34 @@ export default function Orderscreen({ navigation }) {
             <View style={styles.container}>
 
                 {/* Header Section */}
+
                 <View style={styles.header}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Pressable onPress={toggleAccordion3}>
-                            <Image resizeMode='contain' source={require('../assets/image/bag.png')} style={styles.icon} />
-                        </Pressable>
-                        <Pressable onPress={toggleAccordion4}>
-                            <Image resizeMode='contain' source={require('../assets/image/message.png')} style={styles.icon} />
-                        </Pressable>
+
+                        <View style={{ position: 'relative' }}>
+                            <Pressable onPress={() => navigation.navigate('News1')}>
+                                <Image resizeMode='contain' source={require('../assets/image/message.png')} style={styles.icon} />
+                            </Pressable>
+                            {unreadCount > 0 && (
+                                <View style={{
+                                    position: 'absolute',
+                                    right: -5,
+                                    top: 5,
+                                    backgroundColor: '#06d6a0',
+                                    borderRadius: 100,
+                                    paddingHorizontal: 5,
+                                    paddingVertical: 2,
+                                    elevation: 10,
+                                    shadowColor: '#06d6a0',
+                                    alignItems: 'center',
+
+                                    justifyContent: 'center',
+                                }}>
+                                    <Text style={{ color: 'white', fontSize: 12, fontFamily: 'morvarid', textAlign: 'center', }}>  {unreadCount}  </Text>
+                                </View>
+                            )}
+                        </View>
+
                     </View>
 
                     {/* Greeting Section */}
@@ -215,6 +269,7 @@ export default function Orderscreen({ navigation }) {
                         <Image resizeMode='contain' source={require('../assets/image/dot2.png')} style={styles.icon} />
                     </Pressable>
                 </View>
+
 
                 {/* Accordion 2 Content */}
                 {isOpen2 && (
@@ -304,46 +359,46 @@ export default function Orderscreen({ navigation }) {
 
                     {
                         gamestab == 1 &&
-                        <Noskhe_dakheli navigation={navigation} username={username}/>
+                        <Noskhe_dakheli navigation={navigation} username={username} />
                     }
                     {
                         gamestab == 2 &&
-                        <Noskhe_atfal navigation={navigation} username={username}/>
+                        <Noskhe_atfal navigation={navigation} username={username} />
                     }
                     {
                         gamestab == 3 &&
-                        <Noskhe_infection navigation={navigation} username={username}/>
+                        <Noskhe_infection navigation={navigation} username={username} />
                     }
                     {
                         gamestab == 4 &&
-                        <Noskhe_gyneacology navigation={navigation} username={username}/>
+                        <Noskhe_gyneacology navigation={navigation} username={username} />
                     }
 
 
                     {
                         gamestab == 5 &&
-                        <Noskhe_urology navigation={navigation} username={username}/>
+                        <Noskhe_urology navigation={navigation} username={username} />
                     }
                     {
                         gamestab == 6 &&
-                        <Noskhe_skin navigation={navigation} username={username}/>
+                        <Noskhe_skin navigation={navigation} username={username} />
                     }
                     {
                         gamestab == 7 &&
-                        <Noskhe_psychiatrics navigation={navigation} username={username}/>
+                        <Noskhe_psychiatrics navigation={navigation} username={username} />
                     }
                     {
                         gamestab == 8 &&
-                        <Noskhe_ent navigation={navigation} username={username}/>
+                        <Noskhe_ent navigation={navigation} username={username} />
                     }
 
                     {
                         gamestab == 9 &&
-                        <Noskhe_eye navigation={navigation} username={username}/>
+                        <Noskhe_eye navigation={navigation} username={username} />
                     }
                     {
                         gamestab == 10 &&
-                        <Noskhe_neurology navigation={navigation}  username={username}/>
+                        <Noskhe_neurology navigation={navigation} username={username} />
                     }
                     {
                         gamestab == 11 &&
@@ -351,7 +406,7 @@ export default function Orderscreen({ navigation }) {
                     }
                     {
                         gamestab == 12 &&
-                        <Noskhe_append navigation={navigation} username={username}/>
+                        <Noskhe_append navigation={navigation} username={username} />
                     }
 
 

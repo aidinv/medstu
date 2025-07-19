@@ -12,7 +12,7 @@ import { Dialog, AlertNotificationRoot, ALERT_TYPE, Toast } from 'react-native-a
 export default class Editdrugscreen extends Component {
 
 
-    width = Dimensions.get('window').width;
+    
 
     constructor(props) {
         super(props);
@@ -234,7 +234,7 @@ export default class Editdrugscreen extends Component {
 
 };
 
-
+const  width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     container: {

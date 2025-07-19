@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
     View,
     Text,
@@ -7,14 +8,67 @@ import {
     Image,
     ActivityIndicator,
     TouchableOpacity,
-    ScrollView,
+    TextInput,
+    Dimensions,
 } from 'react-native';
 
-const Newsscreen = () => {
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
+
+const Newsscreen = ({ navigation }) => {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedType, setSelectedType] = useState(null);
+    const [selectedTypes, setSelectedTypes] = useState([]);
+    const [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
     const [expandedItems, setExpandedItems] = useState([]);
+    const [username, setUsername] = useState(null);
+    const [readIds, setReadIds] = useState([]);
+    const [searchText, setSearchText] = useState('');
+
+
+
+    const height = Dimensions.get('window').height;
+    const width = Dimensions.get('window').width;
+    const [active, setactive] = React.useState(null);
+    const [gamestab, setgamestab] = React.useState(1);
+    const onselectswich = (value) => {
+        setgamestab(value);
+    }
+
+    const [unreadCount, setUnreadCount] = useState(0);
+
+    const [isOpen2, setIsOpen2] = useState(false);
+    const [isOpen3, setIsOpen3] = useState(false);
+    const [isOpen4, setIsOpen4] = useState(false);
+
+
+    const toggleAccordion2 = () => {
+        setIsOpen2(!isOpen2);
+        setIsOpen3(false);
+        setIsOpen4(false);
+    };
+
+    const toggleAccordion3 = () => {
+        setIsOpen2(false);
+        setIsOpen3(!isOpen3);
+        setIsOpen4(false);
+    };
+
+    const toggleAccordion4 = () => {
+        setIsOpen2(false);
+        setIsOpen3(false);
+        setIsOpen4(!isOpen4);
+    };
+
+    
+
+    const toggleTypeSelection = (type) => {
+        setSelectedTypes((prev) =>
+            prev.includes(type)
+                ? prev.filter((t) => t !== type)
+                : [...prev, type]
+        );
+    };
 
     const iconMap = {
         general: 'https://img.icons8.com/?size=100&id=116722&format=png&color=000000',
@@ -50,6 +104,7 @@ const Newsscreen = () => {
         'pharmacy',
         'alert',
     ];
+
     const typeLabels = {
         general: 'عمومی',
         financial: 'مالی',
@@ -61,14 +116,22 @@ const Newsscreen = () => {
         alert: 'هشدار',
     };
 
-
     useEffect(() => {
         const fetchMessages = async () => {
             try {
                 const response = await fetch('https://draydinv.ir/extra/news.php');
                 const data = await response.json();
                 if (data.news && Array.isArray(data.news)) {
-                    setMessages(data.news);
+                    // مرتب سازی از جدید به قدیم بر اساس id یا تاریخ شمسی (اینجا فرض id)
+                    const sortedNews = data.news.sort((a, b) => b.id - a.id);
+                    setMessages(sortedNews);
+
+                    const stored = await AsyncStorage.getItem('readNewsIds');
+                    const readIdArray = stored ? JSON.parse(stored) : [];
+
+                    // محاسبه تعداد پیام های امروز که خوانده نشده اند
+                    const unreadTodayCount = sortedNews.filter(item => item.days_passed === 'امروز' && !readIdArray.includes(item.id)).length;
+                    await AsyncStorage.setItem('newMessageCount', unreadTodayCount.toString());
                 } else {
                     setMessages([]);
                 }
@@ -79,12 +142,88 @@ const Newsscreen = () => {
             }
         };
 
+        const loadUsername = async () => {
+            try {
+                const storedUsername = await AsyncStorage.getItem('username');
+                if (storedUsername) {
+                    setUsername(storedUsername);
+                }
+            } catch (error) {
+                console.error('Error loading username', error);
+            }
+        };
+
+        const loadReadIds = async () => {
+            try {
+                const stored = await AsyncStorage.getItem('readNewsIds');
+                if (stored) {
+                    setReadIds(JSON.parse(stored));
+                }
+            } catch (e) {
+                console.error('Error loading read IDs:', e);
+            }
+        };
+
         fetchMessages();
+        loadUsername();
+        loadReadIds();
     }, []);
+
+    const handlePressMessage = async (id) => {
+        setExpandedItems((prev) =>
+            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+        );
+
+        if (!readIds.includes(id)) {
+            const updated = [...readIds, id];
+            setReadIds(updated);
+            await AsyncStorage.setItem('readNewsIds', JSON.stringify(updated));
+
+            if (username) {
+                try {
+                    await fetch('http://draydinv.ir/extra/reduceread.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            decrease: 1,
+                        }),
+                    });
+                } catch (error) {
+                    console.error('Error decreasing unread count:', error);
+                }
+            }
+        }
+
+
+    };
+
+    // دکمه علامت‌گذاری همه به‌عنوان خوانده شده
+    const markAllRead = async () => {
+        try {
+            const allIds = messages.map(msg => msg.id);
+            setReadIds(allIds);
+            await AsyncStorage.setItem('readNewsIds', JSON.stringify(allIds));
+        } catch (error) {
+            console.error('Error marking all read:', error);
+        }
+    };
+
+    // فیلتر کردن با توجه به نوع و جستجو
+    const filteredMessages =
+        messages
+            .filter(msg =>
+                (selectedTypes.length === 0 || selectedTypes.includes(msg.type)) &&
+                (msg.title.includes(searchText) || msg.content.includes(searchText))
+            );
 
     const renderItem = ({ item }) => {
         const iconUri = iconMap[item.type] || iconMap.default;
         const bgColor = backgroundColorMap[item.type] || backgroundColorMap.default;
+        const isExpanded = expandedItems.includes(item.id);
+        const isRead = readIds.includes(item.id);
 
         let timeText = '';
         if (item.days_passed === 'امروز') {
@@ -95,21 +234,10 @@ const Newsscreen = () => {
             timeText = item.shamsi_date || '';
         }
 
-        const isExpanded = expandedItems.includes(item.id);
-
         return (
-            <TouchableOpacity
-                onPress={() => {
-                    setExpandedItems(prev =>
-                        prev.includes(item.id)
-                            ? prev.filter(id => id !== item.id)
-                            : [...prev, item.id]
-                    );
-                }}
-            >
+            <TouchableOpacity onPress={() => handlePressMessage(item.id)}>
                 <View style={[styles.itemContainer, { backgroundColor: bgColor }]}>
                     <Image source={{ uri: iconUri }} style={styles.icon} />
-
                     <View style={styles.textContainer}>
                         <View style={styles.timeRow}>
                             <Image
@@ -118,9 +246,7 @@ const Newsscreen = () => {
                             />
                             <Text style={styles.time}>{timeText}</Text>
                         </View>
-
                         <Text style={styles.title}>{item.title}</Text>
-
                         <Text
                             style={styles.body}
                             numberOfLines={isExpanded ? undefined : 2}
@@ -128,19 +254,20 @@ const Newsscreen = () => {
                         >
                             {item.content}
                         </Text>
-
                         {isExpanded && item.img && item.img !== 'null' && item.img !== '' && (
                             <Image source={{ uri: item.img }} style={styles.mainImage} />
+                        )}
+                        {isRead && (
+                            <View style={styles.readCheck}>
+                                <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/30/4caf50/checkmark.png' }} style={{ width: 16, height: 16 }} />
+                                <Text style={{ fontSize: 12, color: '#4caf50', marginLeft: 4 }}>خوانده شده</Text>
+                            </View>
                         )}
                     </View>
                 </View>
             </TouchableOpacity>
         );
     };
-
-    const filteredMessages = selectedType
-        ? messages.filter(msg => msg.type === selectedType)
-        : messages;
 
     if (loading) {
         return (
@@ -151,45 +278,83 @@ const Newsscreen = () => {
     }
 
     return (
-        <View style={{ flex: 1 }}>
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                style={styles.filterBar}
-                contentContainerStyle={{
-                    flexDirection: 'row-reverse',
-                    alignItems: 'center',
-                    paddingHorizontal: 10, // فاصله از ابتدا و انتها
-                }}
-            >
+        <View style={{ flex: 1, marginTop: 5 }}>
+            {/* فیلتر پیام‌ها */}
+            <View style={{ paddingHorizontal: 15, marginVertical: 10 }}>
                 <TouchableOpacity
-                    onPress={() => setSelectedType(null)}
-                    style={[styles.filterButton, !selectedType && styles.activeFilter]}
+                    onPress={() => setFilterDropdownVisible(!filterDropdownVisible)}
+                    style={{ backgroundColor: '#06d6a0', padding: 20, borderRadius: 8 }}
                 >
-                    <Text style={styles.filterText}>همه</Text>
+                    <Text style={{ textAlign: 'center', fontWeight: '600', color: 'black' }}>
+                        {selectedTypes.length > 0
+                            ? `فیلتر: ${selectedTypes.map((type) => typeLabels[type]).join(', ')}`
+                            : 'فیلتر پیام ها'}
+                    </Text>
                 </TouchableOpacity>
 
-                {filterOptions.map(type => (
-                    <TouchableOpacity
-                        key={type}
-                        onPress={() => setSelectedType(type)}
-                        style={[
-                            styles.filterButton,
-                            selectedType === type && styles.activeFilter,
-                        ]}
-                    >
-                        <Text style={styles.filterText}>{typeLabels[type]}</Text>
-                    </TouchableOpacity>
-                ))}
-            </ScrollView>
+                {filterDropdownVisible && (
+                    <View style={{ backgroundColor: '#f9f9f9', marginTop: 5, padding: 10, borderRadius: 8 }}>
+                        <View style={{ flexDirection: 'row-reverse', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                            {filterOptions.map((type) => (
+                                <TouchableOpacity
+                                    key={type}
+                                    onPress={() => toggleTypeSelection(type)}
+                                    style={{ flexBasis: '23%', marginVertical: 6, alignItems: 'center', flexDirection: 'row-reverse' }}
+                                >
+                                    <View
+                                        style={{
+                                            height: 20,
+                                            width: 20,
+                                            borderRadius: 4,
+                                            borderWidth: 1,
+                                            borderColor: '#999',
+                                            marginLeft: 6,
+                                            backgroundColor: selectedTypes.includes(type) ? '#007bff' : 'white',
+                                        }}
+                                    />
+                                    <Text style={{ fontSize: 13 }}>{typeLabels[type]}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                        <TouchableOpacity
+                            onPress={() => setSelectedTypes([])}
+                            style={{ marginTop: 10, alignSelf: 'center', padding: 6, backgroundColor: '#eee', borderRadius: 4 }}
+                        >
+                            <Text style={{ fontSize: 12, color: '#333', width: width * 8 / 10, textAlign: 'center', padding: 10 }}>پاک کردن فیلترها</Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
+            </View>
 
+            {/* نوار جستجو */}
+            <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+                <TextInput
+                    placeholder="جستجو در پیام‌ها ..."
+                    value={searchText}
+                    onChangeText={setSearchText}
+                    style={styles.searchInput}
+                    clearButtonMode="while-editing"
+                />
+            </View>
 
+            {/* دکمه علامت‌گذاری همه به‌عنوان خوانده شده */}
+            <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+                <TouchableOpacity
+                    onPress={markAllRead}
+                    style={{ backgroundColor: '#2196f3', padding: 12, borderRadius: 8 }}
+                >
+                    <Text style={{ textAlign: 'center', color: 'white', fontWeight: 'bold' }}>
+                        علامت‌گذاری همه به عنوان خوانده شده
+                    </Text>
+                </TouchableOpacity>
+            </View>
 
             <FlatList
                 data={filteredMessages}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
                 contentContainerStyle={styles.list}
+                keyboardShouldPersistTaps="handled"
             />
         </View>
     );
@@ -197,22 +362,23 @@ const Newsscreen = () => {
 
 const styles = StyleSheet.create({
     list: {
-        padding: 10,
-        marginTop: 10,
+        padding: 20,
+        paddingBottom: 200,
     },
     itemContainer: {
         flexDirection: 'row-reverse',
         borderRadius: 10,
         padding: 12,
         marginBottom: 12,
-        elevation: 2,
+        elevation: 0,
         alignItems: 'flex-start',
     },
     icon: {
-        width: 60,
-        height: 60,
-        marginLeft: 10,
-        marginTop: 5,
+        width: 50,
+        height: 50,
+        borderRadius: 10,
+        margin: 5,
+        backgroundColor: '#fff',
     },
     textContainer: {
         flex: 1,
@@ -232,58 +398,46 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#777',
         textAlign: 'right',
-        writingDirection: 'rtl',
     },
     title: {
         fontWeight: 'bold',
         fontSize: 16,
         marginBottom: 4,
         textAlign: 'right',
-        writingDirection: 'rtl',
     },
     body: {
         fontSize: 14,
         color: '#333',
         marginBottom: 8,
         textAlign: 'right',
-        writingDirection: 'rtl',
     },
     mainImage: {
         width: '100%',
         height: 150,
         borderRadius: 10,
-        resizeMode: 'cover',
+        resizeMode: 'stretch',
         marginTop: 8,
+        alignSelf: 'center'
     },
     loaderContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    filterBar: {
-        paddingVertical: 6,
-        backgroundColor: '',
-        borderBottomWidth: 0,
-        borderBottomColor: '',
-        maxHeight: 50,
-        marginTop: 40,
-    },
-    filterButton: {
-        paddingHorizontal: 12,
-        paddingVertical: 4,
-        borderRadius: 20,
-        backgroundColor: '#eee',
-        marginHorizontal: 5,
-        justifyContent: 'center',
+    readCheck: {
+        flexDirection: 'row',
         alignItems: 'center',
-        minWidth: 70, // برای دید کامل آیتم‌ها
+        marginTop: 5,
     },
-    activeFilter: {
-        backgroundColor: '#007bff',
-    },
-    filterText: {
-        color: '#000',
+    searchInput: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        paddingVertical: 8,
+        paddingHorizontal: 12,
         fontSize: 14,
+        textAlign: 'right',
+        backgroundColor: 'white',
     },
 });
 

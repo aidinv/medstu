@@ -367,6 +367,7 @@ function Customswich_component8({
     );
 }
 const height2 = Dimensions.get('window').height;
+const  width = Dimensions.get('window').width;
 const styles = StyleSheet.create({
     dotView: {
         flexDirection: 'row',

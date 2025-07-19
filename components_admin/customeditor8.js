@@ -1657,6 +1657,7 @@ const Editorj = (props) => {
     );
 };
 
+const  width = Dimensions.get('window').width;
 const styles = StyleSheet.create({
     container: {
         flex: 1,

@@ -38,6 +38,8 @@ import Add_drugscreen from './components_admin/adddrugscreen';
 import Editdrugscreen from './components_admin/editdrugscreen';
 import Addcontentdrugscreen from './components_admin/addcontentdrugscreen';
 import Newsscreen from './components_news/newsscreen';
+import Admin_news from './components_admin/admin_news';
+import Add_newscreen from './components_admin/addnewsscreen';
 
 const Stack = createStackNavigator();
 
@@ -84,7 +86,8 @@ export default function App() {
             <Stack.Screen name="Adddrugcontent1" component={Addcontentdrugscreen} options={{ headerShown: false }} />
             <Stack.Screen name="News1" component={Newsscreen} options={{ headerShown: false }} />
           
-         
+         <Stack.Screen name="Adminnews" component={Admin_news} options={{ headerShown: false }} />
+          <Stack.Screen name="Addnews1" component={Add_newscreen} options={{ headerShown: false }} />
 
         </Stack.Group>
       </Stack.Navigator>

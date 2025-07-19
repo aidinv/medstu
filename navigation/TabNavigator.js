@@ -80,7 +80,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
         backgroundColor: '#E6F2EA',
         borderRadius: 15,
         width: tabBarWidth,
-        marginBottom: 40,
+        marginBottom: 20,
         height: 70,
         elevation: 5,
         overflow: 'hidden',
