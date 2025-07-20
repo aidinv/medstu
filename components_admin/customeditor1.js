@@ -128,9 +128,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/emoji/48/books-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/emoji/48/books-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/emoji/48/books-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/emoji/48/books-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -147,9 +147,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/plasticine/100/hand-with-pen.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/plasticine/100/hand-with-pen.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/plasticine/100/hand-with-pen.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/plasticine/100/hand-with-pen.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -166,9 +166,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/doodle/35/error.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/doodle/35/error.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/doodle/35/error.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/doodle/35/error.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -185,9 +185,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0;margin-Left:20;margin-Right:20"><img src="http://img.icons8.com/fluency/35/states.png" style="float: ${imageAlignment}; width: 20px; height: 20px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0;margin-Left:20;margin-Right:20"><img src="https://img.icons8.com/?size=100&id=81146&format=png&color=000000" style="float: ${imageAlignment}; width: 20px; height: 20px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0;margin-Left:20;margin-Right:20"><img src="http://img.icons8.com/fluency/35/states.png" style="float: ${imageAlignment}; width: 20px; height: 20px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0;margin-Left:20;margin-Right:20"><img src="https://img.icons8.com/?size=100&id=81146&format=png&color=000000" style="float: ${imageAlignment}; width: 20px; height: 20px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -204,9 +204,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/external-wanicon-lineal-color-wanicon/35/external-drug-hospital-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/external-wanicon-lineal-color-wanicon/35/external-drug-hospital-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/external-wanicon-lineal-color-wanicon/35/external-drug-hospital-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/external-wanicon-lineal-color-wanicon/35/external-drug-hospital-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -223,9 +223,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/3d-fluency/35/thinking-face-2.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/3d-fluency/35/thinking-face-2.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/3d-fluency/35/thinking-face-2.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/3d-fluency/35/thinking-face-2.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -242,9 +242,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/external-wanicon-lineal-color-wanicon/64/external-blood-sample-health-checkup-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/external-blood-sample-health-checkup-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/external-wanicon-lineal-color-wanicon/64/external-blood-sample-health-checkup-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/external-blood-sample-health-checkup-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -261,9 +261,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/plasticine/100/coughing.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/plasticine/100/coughing.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/plasticine/100/coughing.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/plasticine/100/coughing.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -280,9 +280,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/color/35/world.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/color/35/world.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/color/35/world.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/color/35/world.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -299,9 +299,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/emoji/35/pill-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/emoji/35/pill-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/emoji/35/pill-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/emoji/35/pill-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -318,15 +318,117 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/3d-fluency/35/virus.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/3d-fluency/35/virus.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="http://img.icons8.com/3d-fluency/35/virus.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/3d-fluency/35/virus.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
         setContent('');
     };
 
+
+     const saveContent11 = () => {
+        const titleDirection = isRtl(title) ? 'rtl' : 'ltr';
+        const imageAlignment = isRtl(title) ? 'left' : 'right'; // تعیین جهت تصویر بر اساس جهت عنوان
+        const contentDirection = isRtl(content) ? 'rtl' : 'ltr';
+        const formattedContent = content.split('\n').join('<br>')
+        let newHtmlContent;
+        if (title.trim() === '') {
+            newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+
+        } else if (content.trim() === '') {
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/?size=100&id=TWNQQb8t3fHR&format=png&color=000000" style="float: ${imageAlignment}; width: 10px; height: 10px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+        } else {
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/?size=100&id=TWNQQb8t3fHR&format=png&color=000000" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+        }
+        setHtmlContent(newHtmlContent);
+        setTitle('');
+        setContent('');
+    };
+
+  const saveContent12 = () => {
+    const titleDirection = isRtl(title) ? 'rtl' : 'ltr';
+    const imageAlignment = isRtl(title) ? 'left' : 'right';
+    const contentDirection = isRtl(content) ? 'rtl' : 'ltr';
+    const formattedContent = content.split('\n').join('<br>');
+    let newHtmlContent;
+
+    const warningBoxStyle = 'background-color: #FFF3CD;  border-radius: 10px; margin:10px';
+    const warningBoxStyle1 = 'background-color: #FFF3CD;';
+
+    if (title.trim() === '') {
+        newHtmlContent = `${htmlContent}<div style="direction: ${contentDirection}; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle}">
+                <img src="https://img.icons8.com/?size=100&id=TWNQQb8t3fHR&format=png&color=000000" style=" padding-left: 7px;padding-right: 7px;float: ${imageAlignment}; width: 10px; height: 10px;" />
+                <h5 style="color: purple; font-weight: bold; padding-left: 7px; padding-right: 7px;">${formattedContent}</h5>
+            </div>`;
+    } else if (content.trim() === '') {
+        newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle}"><img src="https://img.icons8.com/?size=100&id=BYsEMDMnYLuT&format=png&color=000000" style=" padding-left: 7px; padding-right: 7px;float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold; padding-left: 7px; padding-right: 7px;">${title}</h5></div>`;
+    } else {
+        newHtmlContent = `${htmlContent}
+            <div style="direction: ${titleDirection};  border-top-left-radius: 10px;border-top-right-radius: 10px; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle1}">
+                <img src="https://img.icons8.com/?size=100&id=BYsEMDMnYLuT&format=png&color=000000" style="float: ${imageAlignment}; width: 35px; height: 35px;" />
+                <h5 style="color: purple; font-weight: bold; padding-left: 7px; padding-right: 7px;">${title}</h5>
+            </div>
+            <p style="direction: ${contentDirection}; padding-left: 7px; padding-right: 14px; margin-top: 0; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px; color: #326E36; ${warningBoxStyle1}">${formattedContent}</p>`;
+    }
+
+    setHtmlContent(newHtmlContent);
+    setTitle('');
+    setContent('');
+};
+
+
+   const saveContent13 = () => {
+    const titleDirection = isRtl(title) ? 'rtl' : 'ltr';
+    const imageAlignment = isRtl(title) ? 'left' : 'right';
+    const contentDirection = isRtl(content) ? 'rtl' : 'ltr';
+    const formattedContent = content.split('\n').join('<br>');
+    let newHtmlContent;
+
+   const warningBoxStyle = 'background-color: #d1e4ea;  border-radius: 10px; margin:10px';
+    const warningBoxStyle1 = 'background-color: #d1e4ea;';
+
+    if (title.trim() === '') {
+        newHtmlContent = `${htmlContent}<div style="direction: ${contentDirection}; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle}">
+                <img src="https://img.icons8.com/?size=100&id=TWNQQb8t3fHR&format=png&color=000000" style=" padding-left: 7px;padding-right: 7px;float: ${imageAlignment}; width: 10px; height: 10px;" />
+                <h5 style="color: purple; font-weight: bold; padding-left: 7px; padding-right: 7px;">${formattedContent}</h5>
+            </div>`;
+    } else if (content.trim() === '') {
+        newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle}"><img src="https://img.icons8.com/?size=100&id=cwy2f54GLMhO&format=png&color=000000" style=" padding-left: 7px; padding-right: 7px;float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold; padding-left: 7px; padding-right: 7px;">${title}</h5></div>`;
+    } else {
+        newHtmlContent = `${htmlContent}
+            <div style="direction: ${titleDirection};  border-top-left-radius: 10px;border-top-right-radius: 10px; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle1}">
+                <img src="https://img.icons8.com/?size=100&id=cwy2f54GLMhO&format=png&color=000000" style="float: ${imageAlignment}; width: 35px; height: 35px;" />
+                <h5 style="color: purple; font-weight: bold; padding-left: 7px; padding-right: 7px;">${title}</h5>
+            </div>
+            <p style="direction: ${contentDirection}; padding-left: 7px; padding-right: 14px; margin-top: 0; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px; color: #326E36; ${warningBoxStyle1}">${formattedContent}</p>`;
+    }
+
+    setHtmlContent(newHtmlContent);
+    setTitle('');
+    setContent('');
+};
+
+
+    const saveContent14 = () => {
+        const titleDirection = isRtl(title) ? 'rtl' : 'ltr';
+        const imageAlignment = isRtl(title) ? 'left' : 'right'; // تعیین جهت تصویر بر اساس جهت عنوان
+        const contentDirection = isRtl(content) ? 'rtl' : 'ltr';
+        const formattedContent = content.split('\n').join('<br>')
+        let newHtmlContent;
+        if (title.trim() === '') {
+            newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+
+        } else if (content.trim() === '') {
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/?size=100&id=jXJrculFxbpi&format=png&color=000000" style="float: ${imageAlignment}; width: 60px; height: 60px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+        } else {
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/?size=100&id=jXJrculFxbpi&format=png&color=000000" style="float: ${imageAlignment}; width: 60px; height: 60px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+        }
+        setHtmlContent(newHtmlContent);
+        setTitle('');
+        setContent('');
+    };
 
     const isweb = Platform.OS === 'web';
     const pre3 = `<style>#wrap {transform:scale(0.8);transform-origin:top left;display:block;overflow:hidden;width:calc(100%*1.20);height:calc(100%*1.25)}</style><div id="wrap">`;
@@ -745,8 +847,128 @@ const Editorb = (props) => {
                     </View>
                 }
 
+ {
+                    gamestab == 13 &&
+                    <View>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
+
+                        <TextInput
+                            style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
+                            onChangeText={setTitle}
+                            value={title}
+                            placeholder=""
+                        />
+
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}> محتوای پاراگراف را وارد کنید:</Text>
+
+                        <TextInput
+                            style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
+                            onChangeText={setContent}
+                            value={content}
+                            placeholder=""
+                            multiline
+                        />
+                        <TouchableOpacity title="ورود" onPress={saveContent11} style={{ marginTop: 3, width: width * 4.5 / 5, justifyContent: 'center', alignSelf: 'center', backgroundColor: '#06d6a0', height: height / 17, borderRadius: 10 }} >
+
+                            <Text style={{ textAlign: 'center', color: 'white', fontWeight: '900', }}>اضافه کردن زیر تیتر نقطه ای</Text>
+
+                        </TouchableOpacity>
+
+                    </View>
+                }
 
 
+
+                   {
+                    gamestab == 14 &&
+                    <View>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
+
+                        <TextInput
+                            style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
+                            onChangeText={setTitle}
+                            value={title}
+                            placeholder=""
+                        />
+
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}> محتوای پاراگراف را وارد کنید:</Text>
+
+                        <TextInput
+                            style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
+                            onChangeText={setContent}
+                            value={content}
+                            placeholder=""
+                            multiline
+                        />
+                        <TouchableOpacity title="ورود" onPress={saveContent12} style={{ marginTop: 3, width: width * 4.5 / 5, justifyContent: 'center', alignSelf: 'center', backgroundColor: '#06d6a0', height: height / 17, borderRadius: 10 }} >
+
+                            <Text style={{ textAlign: 'center', color: 'white', fontWeight: '900', }}>اضافه کردن باکس </Text>
+
+                        </TouchableOpacity>
+
+                    </View>
+                }
+
+                    {
+                    gamestab == 15 &&
+                    <View>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
+
+                        <TextInput
+                            style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
+                            onChangeText={setTitle}
+                            value={title}
+                            placeholder=""
+                        />
+
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}> محتوای پاراگراف را وارد کنید:</Text>
+
+                        <TextInput
+                            style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
+                            onChangeText={setContent}
+                            value={content}
+                            placeholder=""
+                            multiline
+                        />
+                        <TouchableOpacity title="ورود" onPress={saveContent13} style={{ marginTop: 3, width: width * 4.5 / 5, justifyContent: 'center', alignSelf: 'center', backgroundColor: '#06d6a0', height: height / 17, borderRadius: 10 }} >
+
+                            <Text style={{ textAlign: 'center', color: 'white', fontWeight: '900', }}>اضافه کردن باکس سبز </Text>
+
+                        </TouchableOpacity>
+
+                    </View>
+                }
+
+
+    {
+                    gamestab == 16 &&
+                    <View>
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}>عنوان پاراگراف را بنویسید:</Text>
+
+                        <TextInput
+                            style={[styles.titleInput, isRtl(title) ? styles.rtlText : styles.ltrText]}
+                            onChangeText={setTitle}
+                            value={title}
+                            placeholder=""
+                        />
+
+                        <Text style={{ marginVertical: 10, fontWeight: '900', color: '#D20062', verticalAlign: 'bottom', marginRight: 10 ,alignSelf:'flex-end' }}> محتوای پاراگراف را وارد کنید:</Text>
+
+                        <TextInput
+                            style={[styles.contentInput, isRtl(content) ? styles.rtlText : styles.ltrText]}
+                            onChangeText={setContent}
+                            value={content}
+                            placeholder=""
+                            multiline
+                        />
+                        <TouchableOpacity title="ورود" onPress={saveContent14} style={{ marginTop: 3, width: width * 4.5 / 5, justifyContent: 'center', alignSelf: 'center', backgroundColor: '#06d6a0', height: height / 17, borderRadius: 10 }} >
+
+                            <Text style={{ textAlign: 'center', color: 'white', fontWeight: '900', }}>اضافه کردن عمو دکتر </Text>
+
+                        </TouchableOpacity>
+
+                    </View>
+                }
 
 
 

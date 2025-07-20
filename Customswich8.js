@@ -41,6 +41,14 @@ function Customswich_component8({
             settitle('اضافه کردن تیتر اتیولوژی');
         } else if (value === 12) {
             settitle('اضافه کردن عکس ');
+        }else if (value === 13) {
+            settitle('اضافه کردن نقطه ');
+        }else if (value === 14) {
+            settitle('اضافه کردن باکس زرد ');
+        }else if (value === 15) {
+            settitle('اضافه کردن باکس آبی ');
+        }else if (value === 16) {
+            settitle('اضافه کردن عمودکتر ');
         }
 
     }
@@ -340,6 +348,99 @@ function Customswich_component8({
                 </View>
 
             </TouchableOpacity>
+
+                <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => updateswichdata(13)}
+                style={{
+                    elevation: 6,
+                    backgroundColor: getselectionmode == 13 ? 'yellow' : 'white',
+                    borderRadius: 12,
+                    width: width * 9 / 77,
+                    marginHorizontal: width / 77,
+                    padding: 8
+
+                }}
+            >
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <Image
+                        source={require('./assets/image/circle.png')}
+                        resizeMode='contain'
+                    />
+                </View>
+
+            </TouchableOpacity>
+
+            
+                <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => updateswichdata(14)}
+                style={{
+                    elevation: 6,
+                    backgroundColor: getselectionmode == 14 ? 'yellow' : 'white',
+                    borderRadius: 12,
+                    width: width * 9 / 77,
+                    marginHorizontal: width / 77,
+                    padding: 8
+
+                }}
+            >
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <Image
+                        source={require('./assets/image/info.png')}
+                        resizeMode='contain'
+                    />
+                </View>
+
+            </TouchableOpacity>
+
+                <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => updateswichdata(15)}
+                style={{
+                    elevation: 6,
+                    backgroundColor: getselectionmode == 15 ? 'yellow' : 'white',
+                    borderRadius: 12,
+                    width: width * 9 / 77,
+                    marginHorizontal: width / 77,
+                    padding: 8
+
+                }}
+            >
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <Image
+                        source={require('./assets/image/ok.png')}
+                        resizeMode='contain'
+                    />
+                </View>
+
+            </TouchableOpacity>
+
+
+                    <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => updateswichdata(16)}
+                style={{
+                    elevation: 6,
+                    backgroundColor: getselectionmode == 16 ? 'yellow' : 'white',
+                    borderRadius: 12,
+                    width: width * 9 / 77,
+                    marginHorizontal: width / 77,
+                    padding: 8
+
+                }}
+            >
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <Image
+                        source={require('./assets/image/uncle.png')}
+                        resizeMode='contain'
+                    />
+                </View>
+
+            </TouchableOpacity>
+
+
+            
 
 
 

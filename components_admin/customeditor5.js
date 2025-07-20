@@ -120,7 +120,7 @@ const Editorf = (props) => {
                 {
                     type: 'tag',
                     name: 'img', // عنوان با تگ h2
-                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'http://img.icons8.com/emoji/48/books-emoji.png', float: titleDirection },
+                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'https://img.icons8.com/emoji/48/books-emoji.png', float: titleDirection },
 
                 },
                 {
@@ -178,7 +178,7 @@ const Editorf = (props) => {
                 {
                     type: 'tag',
                     name: 'img', // عنوان با تگ h2
-                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'http://img.icons8.com/plasticine/100/hand-with-pen.png', float: titleDirection },
+                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'https://img.icons8.com/plasticine/100/hand-with-pen.png', float: titleDirection },
 
                 },
                 {
@@ -236,7 +236,7 @@ const Editorf = (props) => {
                 {
                     type: 'tag',
                     name: 'img', // عنوان با تگ h2
-                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'http://img.icons8.com/doodle/35/error.png', float: titleDirection },
+                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'https://img.icons8.com/doodle/35/error.png', float: titleDirection },
 
                 },
                 {
@@ -293,7 +293,7 @@ const Editorf = (props) => {
                 {
                     type: 'tag',
                     name: 'img', // عنوان با تگ h2
-                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'http://img.icons8.com/fluency/35/states.png', float: titleDirection },
+                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'https://img.icons8.com/?size=100&id=81146&format=png&color=000000', float: titleDirection },
 
                 },
                 {
@@ -351,7 +351,7 @@ const Editorf = (props) => {
                 {
                     type: 'tag',
                     name: 'img', // عنوان با تگ h2
-                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'http://img.icons8.com/external-wanicon-lineal-color-wanicon/35/external-drug-hospital-wanicon-lineal-color-wanicon.png', float: titleDirection },
+                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'https://img.icons8.com/external-wanicon-lineal-color-wanicon/35/external-drug-hospital-wanicon-lineal-color-wanicon.png', float: titleDirection },
 
                 },
                 {
@@ -409,7 +409,7 @@ const Editorf = (props) => {
                 {
                     type: 'tag',
                     name: 'img', // عنوان با تگ h2
-                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'http://img.icons8.com/3d-fluency/35/thinking-face-2.png', float: titleDirection },
+                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'https://img.icons8.com/3d-fluency/35/thinking-face-2.png', float: titleDirection },
 
                 },
                 {
@@ -468,7 +468,7 @@ const Editorf = (props) => {
                 {
                     type: 'tag',
                     name: 'img', // عنوان با تگ h2
-                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'http://img.icons8.com/external-wanicon-lineal-color-wanicon/64/external-blood-sample-health-checkup-wanicon-lineal-color-wanicon.png', float: titleDirection },
+                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/external-blood-sample-health-checkup-wanicon-lineal-color-wanicon.png', float: titleDirection },
 
                 },
                 {
@@ -527,7 +527,7 @@ const Editorf = (props) => {
                 {
                     type: 'tag',
                     name: 'img', // عنوان با تگ h2
-                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'http://img.icons8.com/plasticine/100/coughing.png', float: titleDirection },
+                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'https://img.icons8.com/plasticine/100/coughing.png', float: titleDirection },
 
                 },
                 {
@@ -586,7 +586,7 @@ const Editorf = (props) => {
                 {
                     type: 'tag',
                     name: 'img', // عنوان با تگ h2
-                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'http://img.icons8.com/color/35/world.png', float: titleDirection },
+                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'https://img.icons8.com/color/35/world.png', float: titleDirection },
 
                 },
                 {
@@ -646,7 +646,7 @@ const Editorf = (props) => {
                 {
                     type: 'tag',
                     name: 'img', // عنوان با تگ h2
-                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'http://img.icons8.com/emoji/35/pill-emoji.png', float: titleDirection },
+                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'https://img.icons8.com/emoji/35/pill-emoji.png', float: titleDirection },
 
                 },
                 {
@@ -705,7 +705,7 @@ const Editorf = (props) => {
                 {
                     type: 'tag',
                     name: 'img', // عنوان با تگ h2
-                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'http://img.icons8.com/3d-fluency/35/virus.png', float: titleDirection },
+                    attribs: { style: 'width: 35px; height: 35px;', dir: titleDirection, src: 'https://img.icons8.com/3d-fluency/35/virus.png', float: titleDirection },
 
                 },
                 {
