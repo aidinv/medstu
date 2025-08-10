@@ -1,92 +1,97 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Dimensions, ScrollView } from 'react-native';
-
+import { View, Text, Dimensions, ActivityIndicator, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 
 const Count = () => {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [counts, setCounts] = useState({});
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    let [fontsLoaded] = useFonts({
-        'dast': require('../assets/fonts/dast.otf'),
-      
-    });
+  const [fontsLoaded] = useFonts({
+    'nazanin': require('../assets/fonts/nazanin.otf'),
+  });
 
+  useEffect(() => {
+    fetch('https://draydinv.ir/extra/getcount.php')
+      .then(res => res.json())
+      .then(json => {
+        setData(json);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Fetch error:', err);
+        setLoading(false);
+      });
+  }, []);
 
-
-
-
-
-    useEffect(() => {
-        // دریافت داده از سرور
-        fetch('https://draydinv.ir/extra/getcount.php')
-            .then(response => response.json())
-            .then(jsonData => {
-                setData(jsonData); // فرض می‌کنیم jsonData به صورت آرایه‌ای از اشیاء است
-                setLoading(false);
-                initializeCounters(jsonData);
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }, []);
-
-    const initializeCounters = (items) => {
-        const initialCounts = {};
-        items.forEach((item, index) => {
-            const key = Object.keys(item)[0]; // گرفتن کلید (مثلاً count_noskhe)
-            initialCounts[key] = 0;
-            let currentCount = 0;
-
-            const interval = setInterval(() => {
-                if (currentCount < item[key]) {
-                    currentCount += 1;
-                    setCounts(prevCounts => ({
-                        ...prevCounts,
-                        [key]: currentCount,
-                    }));
-                } else {
-                    clearInterval(interval);
-                }
-            }, 30); // سرعت شمارش را با تغییر این مقدار کنترل کنید
-        });
-    };
-
-    if (loading) {
-        return <Text>در حال بارگذاری...</Text>;
-    }
-
+  if (!fontsLoaded || loading) {
     return (
-        <ScrollView style={{ flexDirection: 'row', marginVertical: 10 ,transform: [{ scaleX: -1 }] }} horizontal showsHorizontalScrollIndicator={false} inverted={false}>
-
-            {data.map((item, index) => {
-                const key = Object.keys(item)[0]; // گرفتن کلید (مثلاً count_noskhe)
-                return (
-                    <View key={index}
-                        style={{
-                            backgroundColor: '#EEEEEE',
-                            borderWidth:0.75,
-                            borderStyle:'dotted',
-                            elevation: 0,
-                            margin: 5,
-                            padding: 10,
-                            width: Dimensions.get('window').width * 1.5 / 5,
-                            borderRadius: 10, marginHorizontal: 5,
-                            transform: [{ scaleX: -1 }] 
-                        }}
-
-                    >
-                        <Text style={{ fontSize: 15, fontFamily: 'dast', textAlign: 'center',color:'green' ,fontWeight:'600'}}>
-                            {key}
-                        </Text>
-                        <Text style={{color:'purple', fontSize: 15, fontFamily: 'dast', textAlign: 'center' ,marginTop:5}}>
-                            {counts[key] || 0}
-                        </Text>
-                    </View>
-                );
-            })}
-        </ScrollView>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="small" color="#6A1B9A" />
+        <Text style={styles.loadingText}>در حال بارگذاری...</Text>
+      </View>
     );
+  }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.grid}>
+        {data.map((item, index) => {
+          const key = Object.keys(item)[0];
+          const value = item[key];
+
+          return (
+            <View key={index} style={styles.card}>
+              <Text style={styles.label}>{value}  {key}</Text>
+            
+            </View>
+          );
+        })}
+      </View>
+    </View>
+  );
 };
 
 export default Count;
 
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 12,
+    paddingTop: 8,
+  },
+  loadingContainer: {
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 5,
+    fontSize: 13,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  card: {
+    width: (Dimensions.get('window').width - 36) / 1, // دو ستون
+    backgroundColor: '#F0F0F0',
+    borderRadius: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 6,
+    marginBottom: 8,
+    alignItems: 'center',
+  },
+  label: {
+    fontFamily: 'nazanin',
+    fontSize: 12,
+    color: '#333',
+    textAlign: 'center',
+  },
+  value: {
+    fontFamily: 'nazanin',
+    fontSize: 14,
+    color: '#6A1B9A',
+    fontWeight: '600',
+    marginTop: 2,
+    textAlign: 'center',
+  },
+});

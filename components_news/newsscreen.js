@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
     TextInput,
     Dimensions,
+    Pressable
 } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
@@ -60,7 +61,7 @@ const Newsscreen = ({ navigation }) => {
         setIsOpen4(!isOpen4);
     };
 
-    
+
 
     const toggleTypeSelection = (type) => {
         setSelectedTypes((prev) =>
@@ -279,8 +280,125 @@ const Newsscreen = ({ navigation }) => {
 
     return (
         <View style={{ flex: 1, marginTop: 5 }}>
+
+            <View style={styles.container}>
+
+                {/* Header Section */}
+
+                <View style={styles.header}>
+                    <View style={{ flexDirection: 'row' }}>
+
+                        <View style={{ position: 'relative' }}>
+                            <Pressable onPress={() => navigation.navigate('News1')}>
+                                <Image resizeMode='contain' source={require('../assets/image/message.png')} style={styles.icon} />
+                            </Pressable>
+                            {unreadCount > 0 && (
+                                <View style={{
+                                    position: 'absolute',
+                                    right: -5,
+                                    top: 5,
+                                    backgroundColor: '#06d6a0',
+                                    borderRadius: 100,
+                                    paddingHorizontal: 5,
+                                    paddingVertical: 2,
+                                    elevation: 10,
+                                    shadowColor: '#06d6a0',
+                                    alignItems: 'center',
+
+                                    justifyContent: 'center',
+                                }}>
+                                    <Text style={{ color: 'white', fontSize: 12, fontFamily: 'nazanin', textAlign: 'center', }}>  {unreadCount}  </Text>
+                                </View>
+                            )}
+                        </View>
+
+                    </View>
+
+                    {/* Greeting Section */}
+                    <View style={styles.greetingContainer}>
+                        <Text style={styles.greetingText}>سلام دکتر {username}  خوش اومدی </Text>
+                        <Image resizeMode='contain' source={require('../assets/image/like.png')} style={styles.likeIcon} />
+                    </View>
+
+                    {/* Dot Icon */}
+                    <Pressable onPress={toggleAccordion2}>
+                        <Image resizeMode='contain' source={require('../assets/image/dot2.png')} style={styles.icon} />
+                    </Pressable>
+                </View>
+                {/* Accordion 2 Content */}
+                {isOpen2 && (
+                    <View
+                        style={{ flexDirection: 'row', justifyContent: 'space-between', width: width * 9.5 / 10, marginTop: 5, padding: 5 }}
+                    >
+                        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.scrollItem}>
+                            <View style={styles.iconContainer}>
+                                <Image source={require('../assets/image/logout.png')} resizeMode='contain' />
+                            </View>
+                        </TouchableOpacity>
+
+                        <View style={styles.scrollItemsRow}>
+                            <TouchableOpacity onPress={() => navigation.navigate('About')} style={styles.scrollItem}>
+                                <View style={styles.iconContainer}>
+                                    <Image source={require('../assets/image/about.png')} resizeMode='contain' />
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.scrollItem}>
+                                <View style={styles.iconContainer}>
+                                    <Image source={require('../assets/image/instagram.png')} resizeMode='contain' />
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.scrollItem}>
+                                <View style={styles.iconContainer}>
+                                    <Image source={require('../assets/image/telegram1.png')} resizeMode='contain' />
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={() => navigation.navigate('User')} style={styles.scrollItem}>
+                                <View style={styles.iconContainer}>
+                                    <Image source={require('../assets/image/user.png')} resizeMode='contain' />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )}
+
+                {/* Accordion 3 Content */}
+                {isOpen3 && (
+                    <View
+                        style={{ flexDirection: 'row', justifyContent: 'space-between', width: width * 9.5 / 10, marginTop: 5, padding: 5 }}
+                    >
+                        <View style={styles.scrollItemsRow}>
+                            <TouchableOpacity onPress={() => navigation.navigate('About')} style={styles.scrollItem}>
+                                <View style={styles.iconContainer}>
+                                    <Image source={require('../assets/image/about.png')} resizeMode='contain' />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )}
+
+                {/* Accordion 4 Content */}
+                {isOpen4 && (
+                    <View
+                        style={{ flexDirection: 'row', justifyContent: 'flex-end', width: width * 9.5 / 10, marginTop: 5, padding: 5 }}
+                    >
+                        <View style={{ flexDirection: 'row' }}>
+                            <TouchableOpacity onPress={() => navigation.navigate('About')} style={{ flexDirection: 'row-reverse' }}>
+                                <Image source={require('../assets/image/message1.gif')} resizeMode='contain' style={styles.messageImage} />
+                                <View style={{ flexDirection: 'column', }}>
+                                    <Text style={styles.messageText}>سلام</Text>
+                                    <Text style={styles.messageSubText}>برای مشاهده پیامها و تیکت هایتان کلیک کنید</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )}
+
+            </View>
             {/* فیلتر پیام‌ها */}
-            <View style={{ paddingHorizontal: 15, marginVertical: 10 }}>
+            <View style={{ paddingHorizontal: 15, marginVertical: 30 }}>
                 <TouchableOpacity
                     onPress={() => setFilterDropdownVisible(!filterDropdownVisible)}
                     style={{ backgroundColor: '#06d6a0', padding: 20, borderRadius: 8 }}
@@ -327,7 +445,7 @@ const Newsscreen = ({ navigation }) => {
             </View>
 
             {/* نوار جستجو */}
-            <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+            <View style={{ paddingHorizontal: 15, marginBottom: 10,flexDirection:'row-reverse' }}>
                 <TextInput
                     placeholder="جستجو در پیام‌ها ..."
                     value={searchText}
@@ -335,19 +453,15 @@ const Newsscreen = ({ navigation }) => {
                     style={styles.searchInput}
                     clearButtonMode="while-editing"
                 />
-            </View>
-
-            {/* دکمه علامت‌گذاری همه به‌عنوان خوانده شده */}
-            <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
-                <TouchableOpacity
+                 <TouchableOpacity
                     onPress={markAllRead}
-                    style={{ backgroundColor: '#2196f3', padding: 12, borderRadius: 8 }}
+                    style={{ backgroundColor: '#06d6a0', padding: 4, borderRadius: 8 ,flexGrow:0.2,alignItems:'center',justifyContent:'center'}}
                 >
-                    <Text style={{ textAlign: 'center', color: 'white', fontWeight: 'bold' }}>
-                        علامت‌گذاری همه به عنوان خوانده شده
-                    </Text>
+                    <Text style={{textAlign:'center'}}>علامت گذاری همه</Text>
                 </TouchableOpacity>
             </View>
+
+          
 
             <FlatList
                 data={filteredMessages}
@@ -433,12 +547,55 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 8,
-        paddingVertical: 8,
+        paddingVertical: 10,
+        margin:2,
         paddingHorizontal: 12,
         fontSize: 14,
         textAlign: 'right',
-        backgroundColor: 'white',
+        backgroundColor: 'white'
+        ,flexGrow:2
+    }, container: {
+        width: width * 9.5 / 10,
+        borderRadius: 10,
+        marginTop: 20,
+        backgroundColor: '#EEEEEE',
+        elevation: 2,
+        alignSelf: 'center',
     },
+    header: {
+        justifyContent: 'space-between',
+        borderBottomWidth: 0,
+        borderBottomColor: 'white',
+        paddingBottom: 0,
+        flexDirection: 'row',
+    },
+    greetingContainer: {
+        flexDirection: 'row-reverse',
+        justifyContent: 'center',
+    },
+    greetingText: {
+        color: 'grey',
+        fontSize: 14,
+        marginTop: 10,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        padding: 5,
+        fontFamily: 'nazanin',
+    },
+        iconContainer: {
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        scrollItemsRow: {
+            flexDirection: 'row',
+            borderTopColor: 'white',
+            borderTopWidth: 1,
+        },
+        likeIcon: {
+            borderRadius: 10,
+            width: 20,
+            alignSelf: 'center',
+        },
 });
 
 export default Newsscreen;

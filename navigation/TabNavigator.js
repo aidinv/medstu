@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   Animated,
   Dimensions,
+  AppState,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFonts } from 'expo-font';
 
@@ -32,13 +34,11 @@ const slidingMargin = (tabWidth - slidingWidth) / 2;
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   const translateX = useRef(new Animated.Value(state.index * tabWidth + slidingMargin)).current;
 
-  // موقعیت دایره سبز
   const circleSize = 7;
   const circleTranslateX = useRef(new Animated.Value(state.index * tabWidth + tabWidth / 2 - circleSize / 2)).current;
-  const circleTranslateY = useRef(new Animated.Value(0)).current;  // برای پرش عمودی
+  const circleTranslateY = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // انیمیشن حرکت sliding background
     Animated.spring(translateX, {
       toValue: state.index * tabWidth + slidingMargin,
       useNativeDriver: true,
@@ -46,31 +46,25 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
       damping: 20,
     }).start();
 
-    // انیمیشن پرش دایره به صورت قوس‌دار (arc)
-
     Animated.sequence([
       Animated.parallel([
-        // بالا رفتن دایره (پرش)
         Animated.timing(circleTranslateY, {
-          toValue: -5,  // ارتفاع پرش
+          toValue: -5,
           duration: 500,
           useNativeDriver: true,
         }),
-        // حرکت افقی به سمت آیتم جدید
         Animated.timing(circleTranslateX, {
           toValue: state.index * tabWidth + tabWidth / 2 - circleSize / 2,
           duration: 1000,
           useNativeDriver: true,
         }),
       ]),
-      // پایین آمدن دایره (نشستن روی آیتم)
       Animated.timing(circleTranslateY, {
         toValue: 0,
         duration: 500,
         useNativeDriver: true,
       }),
     ]).start();
-
   }, [state.index]);
 
   return (
@@ -87,7 +81,6 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
         alignSelf: 'center',
       }}
     >
-      {/* Sliding background */}
       <Animated.View
         style={{
           position: 'absolute',
@@ -106,7 +99,6 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
         }}
       />
 
-      {/* دایره سبز با انیمیشن پرش */}
       <Animated.View
         style={{
           position: 'absolute',
@@ -128,7 +120,6 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
         }}
       />
 
-      {/* Tab items */}
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const focused = state.index === index;
@@ -161,7 +152,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
             <Text
               style={{
                 fontSize: 10,
-                fontFamily: 'morvarid',
+                fontFamily: 'nazanin',
                 color: focused ? '#06d6a0' : 'grey',
                 textAlign: 'center',
               }}
@@ -177,8 +168,57 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
 const Bottom_Tabs = () => {
   const [fontsLoaded] = useFonts({
-    morvarid: require('../assets/fonts/morvarid.ttf'),
+    nazanin: require('../assets/fonts/nazanin.ttf'),
   });
+
+  const [username, setUsername] = useState('');
+  const [accumulatedMinutes, setAccumulatedMinutes] = useState(0);
+  const appState = useRef(AppState.currentState);
+
+  useEffect(() => {
+    AsyncStorage.getItem('username').then(name => {
+      if (name) setUsername(name);
+    });
+  }, []);
+
+ useEffect(() => {
+  if (!username) return;
+
+  const subscription = AppState.addEventListener('change', nextAppState => {
+    appState.current = nextAppState;
+  });
+
+  const intervalId = setInterval(() => {
+    if (appState.current === 'active') {
+      sendUsageTime(username);  // فقط ارسال 60 ثانیه ثابت هر دقیقه
+    }
+  }, 60000);
+
+  return () => {
+    subscription.remove();
+    clearInterval(intervalId);
+  };
+}, [username]);
+
+
+const sendUsageTime = async (username) => {
+  try {
+    const response = await fetch('https://draydinv.ir/extra/increment_usage.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username,
+        date: new Date().toISOString().slice(0, 10),
+        timeInSeconds: 60,  // هر بار 60 ثانیه ارسال شود
+      }),
+    });
+    const data = await response.json();
+    console.log('Server response:', data);
+  } catch (error) {
+    console.error('Error sending usage time:', error);
+  }
+};
+
 
   if (!fontsLoaded) return null;
 

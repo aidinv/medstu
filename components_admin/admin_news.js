@@ -111,8 +111,8 @@ export default class Admin_news extends Component {
                 <View style={{ flexDirection: 'row-reverse' }} >
                     <View style={{ flexDirection: 'column', backgroundColor: '', flex: 1, alignItems:'flex-end' }}>
 
-                        <Text style={{ fontFamily: 'morvarid', color: 'green' }}>  عنوان :   {text}</Text>
-                         <Text style={{ fontFamily: 'morvarid', color: 'gray' }}>  تاریخ :   {shamsi_date}</Text>
+                        <Text style={{ fontFamily: 'nazanin', color: 'green' }}>  عنوان :   {text}</Text>
+                         <Text style={{ fontFamily: 'nazanin', color: 'gray' }}>  تاریخ :   {shamsi_date}</Text>
 
                     </View>
                     <View style={{ flexDirection: 'row-reverse', backgroundColor: '', flex: 1, justifyContent: 'flex-end' }}>

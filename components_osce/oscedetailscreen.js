@@ -102,41 +102,134 @@ class Oscedetailscreen extends Component {
     const isExpanded = this.state.expandedItemId === item.id;
     const webViewHeight = this.state.webViewHeights[item.id] || 0;
 
-    const htmlContent = `
-      <html dir="rtl">
-        <head>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <style>
-            @font-face {
-              font-family: 'morvarid';
-              src: url('https://draydinv.ir/font1/morvarid.ttf');
-            }
-            body {
-              font-size: 16px;
-              font-family: 'morvarid';
-              padding: 10px;
-              line-height: 1.8;
-              direction: rtl;
-              margin: 0;
-              background-color: transparent;
-            }
-          </style>
-        </head>
-        <body>${item.content}
-          <script>
-            function sendHeight() {
-              const height = document.body.scrollHeight;
-              window.${Platform.OS === 'web' ? 'parent' : 'ReactNativeWebView'}.postMessage(
-                ${Platform.OS === 'web'
-        ? `JSON.stringify({ type: 'iframeHeight', id: '${item.id}', height })`
-        : `height.toString()`});
-            }
-            window.onload = sendHeight;
-            window.addEventListener('resize', sendHeight);
-          </script>
-        </body>
-      </html>
-    `;
+const htmlContent = `
+<html dir="rtl" lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    @font-face {
+      font-family: 'Nazanin';
+      src: url('https://draydinv.ir/font1/nazanin.woff2') format('woff2'),
+           url('https://draydinv.ir/font1/nazanin.woff') format('woff'),
+           url('https://draydinv.ir/font1/nazanin.otf') format('opentype');
+      font-display: swap;
+    }
+
+    body {
+      font-family: 'Nazanin', sans-serif;
+      direction: rtl;
+      line-height: 1.8;
+      margin: 0;
+      padding: 10px;
+      background: transparent;
+      unicode-bidi: embed;
+    }
+
+    .fa-num {
+      font-family: 'Nazanin', sans-serif !important;
+      unicode-bidi: bidi-override;
+    }
+
+    .en-num {
+      font-family: Arial, sans-serif !important;
+      direction: ltr;
+      unicode-bidi: bidi-override;
+    }
+
+    .en-text {
+      direction: ltr;
+      unicode-bidi: embed;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="content">${item.content}</div>
+
+  <script>
+    (function() {
+      function toFarsiNumber(str) {
+        return str.replace(/[0-9]/g, function(d) {
+          return String.fromCharCode(d.charCodeAt(0) + 1728);
+        });
+      }
+
+      function toEnglishNumber(str) {
+        return str.replace(/[\\u06F0-\\u06F9]/g, function(d) {
+          return String.fromCharCode(d.charCodeAt(0) - 1728);
+        });
+      }
+
+      var contentDiv = document.getElementById('content');
+
+      function processNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          var parentDir = window.getComputedStyle(node.parentElement).direction;
+          var text = node.textContent;
+
+          if (parentDir === 'rtl') {
+            // در متن فارسی، کلمات انگلیسی به همراه اعداد انگلیسی را جدا می‌کنیم
+            // ابتدا کلمات انگلیسی و اعداد انگلیسی را با هم انتخاب می‌کنیم
+            // سپس آنها را در span.en-text می‌گذاریم، و اعداد را در داخل همان کلمه به صورت fa-num یا en-num درست می‌کنیم
+
+            var parts = text.split(/([a-zA-Z0-9@./#&+-]+)/g);
+            var newText = parts.map(part => {
+              if (/^[a-zA-Z0-9@./#&+-]+$/.test(part)) {
+                // کلمه یا عدد انگلیسی
+                // اعداد داخل این بخش به en-num تبدیل شوند
+                var wrapped = part.replace(/[0-9]+/g, num => '<span class="en-num">' + num + '</span>');
+                return '<span class="en-text">' + wrapped + '</span>';
+              } else {
+                // متن فارسی: اعداد انگلیسی را به فارسی تبدیل و در span.fa-num بگذار
+                var converted = part.replace(/[0-9]+/g, num => '<span class="fa-num">' + toFarsiNumber(num) + '</span>');
+                return converted;
+              }
+            }).join('');
+            text = newText;
+
+          } else {
+            // متن انگلیسی: تبدیل اعداد فارسی به انگلیسی
+            text = text.replace(/[\\u06F0-\\u06F9]+/g, function(num) {
+              return '<span class="en-num">' + toEnglishNumber(num) + '</span>';
+            });
+
+            // اعداد انگلیسی را هم در span.en-num بگذار
+            text = text.replace(/[0-9]+/g, function(num) {
+              return '<span class="en-num">' + num + '</span>';
+            });
+          }
+
+          var temp = document.createElement('span');
+          temp.innerHTML = text;
+          node.replaceWith(...temp.childNodes);
+
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          node.childNodes.forEach(processNode);
+        }
+      }
+
+      processNode(contentDiv);
+    })();
+
+    function sendHeight() {
+      var h = document.body.scrollHeight || document.documentElement.scrollHeight;
+      if (${Platform.OS === 'web'}) {
+        window.parent.postMessage(JSON.stringify({type:'iframeHeight', id:'${item.id}', height: h}));
+      } else {
+        window.ReactNativeWebView.postMessage(h.toString());
+      }
+    }
+
+    window.onload = sendHeight;
+    window.addEventListener('resize', sendHeight);
+  </script>
+</body>
+</html>
+`;
+
+
+
 
     return (
       <View style={styles.card}>
@@ -331,7 +424,7 @@ class Oscedetailscreen extends Component {
               <View style={{ flexDirection: 'row-reverse', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <Image resizeMode='contain' source={require('../assets/img/nephrology1.png')} style={{ width: 30, height: 20, borderRadius: 15, tintColor: '', }} />
 
-                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}>مهارت بالینی بخش :  {this.state.cat_fa}</Text>
+                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}> اورژانس  :  {this.state.cat_fa}</Text>
 
               </View>
             }
@@ -340,7 +433,7 @@ class Oscedetailscreen extends Component {
               <View style={{ flexDirection: 'row-reverse', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <Image resizeMode='contain' source={require('../assets/img/child1.png')} style={{ width: 30, height: 20, borderRadius: 15, tintColor: '', }} />
 
-                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}>مهارت بالینی بخش  :  {this.state.cat_fa}</Text>
+                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}> اورژانس  :  {this.state.cat_fa}</Text>
 
               </View>
             }
@@ -348,7 +441,7 @@ class Oscedetailscreen extends Component {
               <View style={{ flexDirection: 'row-reverse', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <Image resizeMode='contain' source={require('../assets/img/gyneacology1.png')} style={{ width: 30, height: 20, borderRadius: 15, tintColor: '', }} />
 
-                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}>مهارت بالینی بخش  :  {this.state.cat_fa}</Text>
+                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}> اورژانس  :  {this.state.cat_fa}</Text>
 
               </View>
             }
@@ -358,7 +451,7 @@ class Oscedetailscreen extends Component {
               <View style={{ flexDirection: 'row-reverse', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <Image resizeMode='contain' source={require('../assets/img/urology1.png')} style={{ width: 30, height: 20, borderRadius: 15, tintColor: '', }} />
 
-                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}>مهارت بالینی بخش  :  {this.state.cat_fa}</Text>
+                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}> اورژانس  :  {this.state.cat_fa}</Text>
 
               </View>
             }
@@ -368,7 +461,7 @@ class Oscedetailscreen extends Component {
               <View style={{ flexDirection: 'row-reverse', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <Image resizeMode='contain' source={require('../assets/img/eye1.png')} style={{ width: 30, height: 20, borderRadius: 15, tintColor: '', }} />
 
-                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}>مهارت بالینی بخش  :  {this.state.cat_fa}</Text>
+                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}>  اورژانس  :  {this.state.cat_fa}</Text>
 
               </View>
             }
@@ -376,16 +469,16 @@ class Oscedetailscreen extends Component {
               <View style={{ flexDirection: 'row-reverse', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <Image resizeMode='contain' source={require('../assets/img/infection1.png')} style={{ width: 30, height: 20, borderRadius: 15, tintColor: '', }} />
 
-                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}>مهارت بالینی بخش  :  {this.state.cat_fa}</Text>
+                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}> اورژانس :  {this.state.cat_fa}</Text>
 
               </View>
             }
 
-            {this.state.cat_fa == 'نورولوژی' &&
+            {this.state.cat_fa == 'مغزواعصاب' &&
               <View style={{ flexDirection: 'row-reverse', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <Image resizeMode='contain' source={require('../assets/img/neurology1.png')} style={{ width: 30, height: 20, borderRadius: 15, tintColor: '', }} />
 
-                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}>مهارت بالینی بخش  :  {this.state.cat_fa}</Text>
+                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}>  اورژانس :  {this.state.cat_fa}</Text>
 
               </View>
             }
@@ -394,16 +487,14 @@ class Oscedetailscreen extends Component {
               <View style={{ flexDirection: 'row-reverse', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <Image resizeMode='contain' source={require('../assets/img/ear1.png')} style={{ width: 30, height: 20, borderRadius: 15, tintColor: '', }} />
 
-                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}>مهارت بالینی بخش  :  {this.state.cat_fa}</Text>
-
+                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}> اورژانس :  {this.state.cat_fa}</Text>
               </View>
             }
             {this.state.cat_fa == 'پوست' &&
               <View style={{ flexDirection: 'row-reverse', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <Image resizeMode='contain' source={require('../assets/img/skin1.png')} style={{ width: 30, height: 20, borderRadius: 15, tintColor: '', }} />
 
-                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}>مهارت بالینی بخش  :  {this.state.cat_fa}</Text>
-
+                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}> اورژانس :  {this.state.cat_fa}</Text>
               </View>
             }
 
@@ -412,8 +503,7 @@ class Oscedetailscreen extends Component {
               <View style={{ flexDirection: 'row-reverse', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <Image resizeMode='contain' source={require('../assets/img/psychiatrics1.png')} style={{ width: 30, height: 20, borderRadius: 15, tintColor: '', }} />
 
-                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}>مهارت بالینی بخش  :  {this.state.cat_fa}</Text>
-
+                <Text style={{ color: 'grey', backgroundColor: '', borderRadius: 5, padding: 5, fontSize: 12, marginTop: 3, textAlign: 'right', textAlignVertical: 'center', marginHorizontal: 0, padding: 5, fontFamily: 'morvarid', }}> اورژانس :  {this.state.cat_fa}</Text>
               </View>
             }
 
@@ -541,7 +631,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    marginHorizontal: 15,
+    marginHorizontal: 2,
     padding: 4,
     backgroundColor: 'transparent',
     elevation: 0,
@@ -551,7 +641,7 @@ const styles = StyleSheet.create({
 
   },
   subject: {
-    fontFamily: 'morvarid',
+    fontFamily: 'nazanin',
     fontSize: 14,
     textAlign: 'right',
     color: '#333',

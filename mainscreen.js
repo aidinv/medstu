@@ -9,7 +9,7 @@ import Bottom_Tabs from './navigation/TabNavigator';
 
 
 
-export default class SettingScreen extends Component {
+export default class MainScreen extends Component {
 
   width = Dimensions.get('window').width;
 

@@ -96,7 +96,7 @@ export default function Oscescreen({ navigation }) {
             textAlign: 'center',
             textAlignVertical: 'center',
             padding: 5,
-            fontFamily: 'dast',
+            fontFamily: 'nazanin',
         },
         likeIcon: {
             borderRadius: 10,
@@ -149,13 +149,13 @@ export default function Oscescreen({ navigation }) {
         },
         messageText: {
             textAlign: 'right',
-            fontFamily: 'dast',
+            fontFamily: 'nazanin',
             fontSize: 20,
             color: 'green',
         },
         messageSubText: {
             textAlign: 'right',
-            fontFamily: 'dast',
+            fontFamily: 'nazanin',
             fontSize: 16,
             marginTop: 5,
         },
@@ -255,7 +255,7 @@ export default function Oscescreen({ navigation }) {
 
                                     justifyContent: 'center',
                                 }}>
-                                    <Text style={{ color: 'white', fontSize: 12, fontFamily: 'morvarid', textAlign: 'center', }}>  {unreadCount}  </Text>
+                                    <Text style={{ color: 'white', fontSize: 12, fontFamily: 'nazanin', textAlign: 'center', }}>  {unreadCount}  </Text>
                                 </View>
                             )}
                         </View>

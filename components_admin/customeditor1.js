@@ -21,61 +21,60 @@ const Editorb = (props) => {
 
     const height = Dimensions.get('window').height;
 
-    const pickImage = async () => {
-        // درخواست دسترسی به گالری
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-            Alert.alert("خطا", "دسترسی به گالری لازم است.");
-            return;
-        }
+    const [imageUri, setImageUri] = useState(null);
+      
+      const pickImage = async () => {
+          const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+          if (!permissionResult.granted) {
+              Alert.alert("اجازه دسترسی به گالری داده نشد");
+              return;
+          }
+  
+          const result = await ImagePicker.launchImageLibraryAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.Images,
+              quality: 1,
+          });
+  
+          if (!result.canceled) {
+              uploadImage(result.assets[0].uri);
+          }
+      };
+  
+      const uploadImage = async (uri) => {
+          let formData = new FormData();
+          formData.append('image', {
+              uri: uri,
+              type: 'image/jpeg',
+              name: 'upload.jpg',
+          });
+  
+          try {
+              const response = await fetch("https://draydinv.ir/extra/upload.php", {
+                  method: 'POST',
+                  body: formData,
+                  headers: {
+                      'Content-Type': 'multipart/form-data',
+                  },
+              });
+  
+              const data = await response.json();
+  
+              if (data.success) {
+                  setImageUri(data.url);
+                  saveContent15(data.url);
+  
+              } else {
+                  Alert.alert("آپلود ناموفق بود");
+              }
+          } catch (error) {
+              Alert.alert("خطا در آپلود", error.message);
+          }
+      };
+  
+  
 
-        // انتخاب تصویر
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            quality: 1,
-        });
 
-        if (!result.canceled) {
-            const imageUri = result.assets[0].uri;
-            uploadImage(imageUri);
-        }
-    };
-
-    const uploadImage = async (imageUri) => {
-        try {
-            const formData = new FormData();
-            const imageName = imageUri.split("/").pop(); // نام فایل
-            formData.append("file", {
-                uri: imageUri,
-                name: imageName,
-                type: "image/jpeg", // یا نوع فایل مناسب
-            });
-
-            // ارسال تصویر به سرور
-            const response = await fetch("https://draydinv.ir/extra/imageupload2.php", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-
-            const data = await response.json();
-            if (response.ok && data.imageUrl) {
-                addImageToHtml(data.imageUrl);
-            } else {
-                Alert.alert("خطا", "آپلود تصویر ناموفق بود.");
-            }
-        } catch (error) {
-            console.error(error);
-            Alert.alert("خطا", "مشکلی پیش آمد.");
-        }
-    };
-
-    const addImageToHtml = (imageUrl) => {
-            let newHtmlContent = `${htmlContent}<img src="${imageUrl}" alt="Uploaded Image" style="width:100vw;border-radius:10px ; height:100vw;"/>`;
-            setHtmlContent(newHtmlContent);
-    };
 
     const handleaddcontent = () => {
 
@@ -128,9 +127,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/emoji/48/books-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/emoji/48/books-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/emoji/48/books-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/emoji/48/books-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -147,9 +146,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/plasticine/100/hand-with-pen.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/plasticine/100/hand-with-pen.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/plasticine/100/hand-with-pen.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/plasticine/100/hand-with-pen.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -166,9 +165,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/doodle/35/error.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/doodle/35/error.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/doodle/35/error.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/doodle/35/error.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -185,9 +184,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0;margin-Left:20;margin-Right:20"><img src="https://img.icons8.com/?size=100&id=81146&format=png&color=000000" style="float: ${imageAlignment}; width: 20px; height: 20px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0;margin-Left:20;margin-Right:20"><img src="https://img.icons8.com/?size=100&id=81146&format=png&color=000000" style="float: ${imageAlignment}; width: 20px; height: 20px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0;margin-Left:20;margin-Right:20"><img src="https://img.icons8.com/?size=100&id=81146&format=png&color=000000" style="float: ${imageAlignment}; width: 20px; height: 20px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0;margin-Left:20;margin-Right:20"><img src="https://img.icons8.com/?size=100&id=81146&format=png&color=000000" style="float: ${imageAlignment}; width: 20px; height: 20px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -204,9 +203,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/external-wanicon-lineal-color-wanicon/35/external-drug-hospital-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/external-wanicon-lineal-color-wanicon/35/external-drug-hospital-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/external-wanicon-lineal-color-wanicon/35/external-drug-hospital-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/external-wanicon-lineal-color-wanicon/35/external-drug-hospital-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -223,9 +222,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/3d-fluency/35/thinking-face-2.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/3d-fluency/35/thinking-face-2.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/3d-fluency/35/thinking-face-2.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/3d-fluency/35/thinking-face-2.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -242,9 +241,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/external-blood-sample-health-checkup-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/external-blood-sample-health-checkup-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/external-blood-sample-health-checkup-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/external-blood-sample-health-checkup-wanicon-lineal-color-wanicon.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -261,9 +260,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/plasticine/100/coughing.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/plasticine/100/coughing.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/plasticine/100/coughing.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/plasticine/100/coughing.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -280,9 +279,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/color/35/world.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/color/35/world.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/color/35/world.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/color/35/world.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -299,9 +298,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/emoji/35/pill-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/emoji/35/pill-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/emoji/35/pill-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/emoji/35/pill-emoji.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -318,9 +317,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/3d-fluency/35/virus.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/3d-fluency/35/virus.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/3d-fluency/35/virus.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/3d-fluency/35/virus.png" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -338,9 +337,9 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/?size=100&id=TWNQQb8t3fHR&format=png&color=000000" style="float: ${imageAlignment}; width: 10px; height: 10px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/?size=100&id=TWNQQb8t3fHR&format=png&color=000000" style="float: ${imageAlignment}; width: 10px; height: 10px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/?size=100&id=TWNQQb8t3fHR&format=png&color=000000" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/?size=100&id=TWNQQb8t3fHR&format=png&color=000000" style="float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
@@ -360,15 +359,15 @@ const Editorb = (props) => {
     if (title.trim() === '') {
         newHtmlContent = `${htmlContent}<div style="direction: ${contentDirection}; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle}">
                 <img src="https://img.icons8.com/?size=100&id=TWNQQb8t3fHR&format=png&color=000000" style=" padding-left: 7px;padding-right: 7px;float: ${imageAlignment}; width: 10px; height: 10px;" />
-                <h5 style="color: purple; font-weight: bold; padding-left: 7px; padding-right: 7px;">${formattedContent}</h5>
+                <h5 style="color: black; font-weight: bold; padding-left: 7px; padding-right: 7px;">${formattedContent}</h5>
             </div>`;
     } else if (content.trim() === '') {
-        newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle}"><img src="https://img.icons8.com/?size=100&id=BYsEMDMnYLuT&format=png&color=000000" style=" padding-left: 7px; padding-right: 7px;float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold; padding-left: 7px; padding-right: 7px;">${title}</h5></div>`;
+        newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle}"><img src="https://img.icons8.com/?size=100&id=BYsEMDMnYLuT&format=png&color=000000" style=" padding-left: 7px; padding-right: 7px;float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold; padding-left: 7px; padding-right: 7px;">${title}</h5></div>`;
     } else {
         newHtmlContent = `${htmlContent}
             <div style="direction: ${titleDirection};  border-top-left-radius: 10px;border-top-right-radius: 10px; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle1}">
                 <img src="https://img.icons8.com/?size=100&id=BYsEMDMnYLuT&format=png&color=000000" style="float: ${imageAlignment}; width: 35px; height: 35px;" />
-                <h5 style="color: purple; font-weight: bold; padding-left: 7px; padding-right: 7px;">${title}</h5>
+                <h5 style="color: black; font-weight: bold; padding-left: 7px; padding-right: 7px;">${title}</h5>
             </div>
             <p style="direction: ${contentDirection}; padding-left: 7px; padding-right: 14px; margin-top: 0; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px; color: #326E36; ${warningBoxStyle1}">${formattedContent}</p>`;
     }
@@ -392,15 +391,15 @@ const Editorb = (props) => {
     if (title.trim() === '') {
         newHtmlContent = `${htmlContent}<div style="direction: ${contentDirection}; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle}">
                 <img src="https://img.icons8.com/?size=100&id=TWNQQb8t3fHR&format=png&color=000000" style=" padding-left: 7px;padding-right: 7px;float: ${imageAlignment}; width: 10px; height: 10px;" />
-                <h5 style="color: purple; font-weight: bold; padding-left: 7px; padding-right: 7px;">${formattedContent}</h5>
+                <h5 style="color: black; font-weight: bold; padding-left: 7px; padding-right: 7px;">${formattedContent}</h5>
             </div>`;
     } else if (content.trim() === '') {
-        newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle}"><img src="https://img.icons8.com/?size=100&id=cwy2f54GLMhO&format=png&color=000000" style=" padding-left: 7px; padding-right: 7px;float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: purple; font-weight: bold; padding-left: 7px; padding-right: 7px;">${title}</h5></div>`;
+        newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle}"><img src="https://img.icons8.com/?size=100&id=cwy2f54GLMhO&format=png&color=000000" style=" padding-left: 7px; padding-right: 7px;float: ${imageAlignment}; width: 35px; height: 35px;" /><h5 style="color: black; font-weight: bold; padding-left: 7px; padding-right: 7px;">${title}</h5></div>`;
     } else {
         newHtmlContent = `${htmlContent}
             <div style="direction: ${titleDirection};  border-top-left-radius: 10px;border-top-right-radius: 10px; display: flex; align-items: center; margin-bottom: 0; ${warningBoxStyle1}">
                 <img src="https://img.icons8.com/?size=100&id=cwy2f54GLMhO&format=png&color=000000" style="float: ${imageAlignment}; width: 35px; height: 35px;" />
-                <h5 style="color: purple; font-weight: bold; padding-left: 7px; padding-right: 7px;">${title}</h5>
+                <h5 style="color: black; font-weight: bold; padding-left: 7px; padding-right: 7px;">${title}</h5>
             </div>
             <p style="direction: ${contentDirection}; padding-left: 7px; padding-right: 14px; margin-top: 0; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px; color: #326E36; ${warningBoxStyle1}">${formattedContent}</p>`;
     }
@@ -421,14 +420,49 @@ const Editorb = (props) => {
             newHtmlContent = `${htmlContent}<p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
 
         } else if (content.trim() === '') {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/?size=100&id=jXJrculFxbpi&format=png&color=000000" style="float: ${imageAlignment}; width: 60px; height: 60px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/?size=100&id=jXJrculFxbpi&format=png&color=000000" style="float: ${imageAlignment}; width: 60px; height: 60px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div>`;
         } else {
-            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/?size=100&id=jXJrculFxbpi&format=png&color=000000" style="float: ${imageAlignment}; width: 60px; height: 60px;" /><h5 style="color: purple; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
+            newHtmlContent = `${htmlContent}<div style="direction: ${titleDirection}; display:flex;align-items:center;margin-bottom:0"><img src="https://img.icons8.com/?size=100&id=jXJrculFxbpi&format=png&color=000000" style="float: ${imageAlignment}; width: 60px; height: 60px;" /><h5 style="color: black; font-weight: bold;padding-Left:7;padding-Right:7">${title}</h5></div><p style="direction: ${contentDirection};margin-Top:0;color:#326E36">${formattedContent}</p>`;
         }
         setHtmlContent(newHtmlContent);
         setTitle('');
         setContent('');
     };
+
+ const saveContent15 = (url1) => {
+        const titleDirection = isRtl(title) ? 'rtl' : 'ltr';
+        const contentDirection = isRtl(content) ? 'rtl' : 'ltr';
+        const formattedContent = content.split('\n').join('<br>');
+        const imgSrc = url1;
+
+        let newHtmlContent = `${htmlContent}
+    <div style="
+      width: 95%;
+      overflow: hidden;
+      margin: 20px auto; /* مارجین بالا و پایین */
+      text-align: center; /* وسط‌چین کردن محتوا داخل div */
+      border: 1px solid #ccc; /* حاشیه تن رنگ خاکستری روشن */
+      padding: 10px; /* فاصله‌ی داخل از حاشیه */
+      border-radius: 8px; /* گوشه‌های گرد */
+      background-color: #fafafa; /* پس‌زمینه روشن اختیاری */
+    ">
+      <img 
+        src="${imgSrc}" 
+        style="
+          width: 98%;
+          height: auto;
+          display: inline-block; /* برای وسط‌چین شدن با text-align */
+          border-radius: 5px; /* گوشه‌های گرد برای عکس */
+          box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* سایه ملایم برای بهتر دیده شدن */
+        "
+      />
+    </div>`;
+
+        setHtmlContent(newHtmlContent);
+        setTitle('');
+        setContent('');
+    };
+    
 
     const isweb = Platform.OS === 'web';
     const pre3 = `<style>#wrap {transform:scale(0.8);transform-origin:top left;display:block;overflow:hidden;width:calc(100%*1.20);height:calc(100%*1.25)}</style><div id="wrap">`;
@@ -1029,7 +1063,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 5,
         padding: 10,
-        borderColor: 'purple',
+        borderColor: 'black',
         borderRadius: 8
     },
     contentInput: {
@@ -1037,7 +1071,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 5,
         padding: 10,
-        borderColor: 'purple',
+        borderColor: 'black',
         borderRadius: 8,
         alignContent: 'flex-start',
         textAlignVertical: 'top',

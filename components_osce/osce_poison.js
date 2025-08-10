@@ -94,7 +94,7 @@ export default class Osce_poison extends Component {
           padding: 10,
           borderRadius: 10,
           paddingHorizontal: 30,
-          fontFamily: 'morvarid',
+          fontFamily: 'nazanin',
         }}>
           فهرست فصل ها - صفحه  {currentPage}  از  {totalPages}
         </Text>
@@ -175,7 +175,7 @@ export default class Osce_poison extends Component {
                 color: 'gray',
                 fontSize: 10,
                 textAlignVertical: 'center',
-                fontFamily: 'morvarid',
+                fontFamily: 'nazanin',
                 marginLeft: 5
               }}> {view} </Text>
 
@@ -197,7 +197,7 @@ export default class Osce_poison extends Component {
                 color: 'grey',
                 fontSize: 10,
                 textAlignVertical: 'center',
-                fontFamily: 'morvarid',
+                fontFamily: 'nazanin',
                 marginLeft: 5
               }}> {likes} </Text>
 
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
     textAlign: 'center',
     alignSelf: 'center',
-    fontFamily: 'morvarid',
+    fontFamily: 'nazanin',
     color: 'green'
 
 
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
     textAlign: 'center',
     alignSelf: 'center',
-    fontFamily: 'morvarid',
+    fontFamily: 'nazanin',
     color: 'grey',
     marginTop: 7
   }
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
   pageText: {
     color: 'grey',
     fontSize: 5,
-    fontFamily: 'dast',
+    fontFamily: 'nazanin',
 
   }
 });

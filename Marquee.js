@@ -28,13 +28,13 @@ export default class Newsitem_component extends Component {
         }
     }
 
-   async componentDidMount() {
+    async componentDidMount() {
         this.getMovies();
         await Font.loadAsync({
-            'dast': require('./assets/fonts/dast.otf'),
-      
-          });
-          this.setState({ fontsLoaded: true });
+            'nazanin': require('./assets/fonts/nazanin.otf'),
+
+        });
+        this.setState({ fontsLoaded: true });
     }
 
     render() {
@@ -43,30 +43,36 @@ export default class Newsitem_component extends Component {
         return (
 
 
-            <View style={{ flex: 1, padding: 5 }}>
+            <View style={{ flex: 1, padding: 5 ,marginTop:15}}>
                 {isLoading ? <ActivityIndicator /> : (
                     <View style={styles.container}>
-                        <AutoScroll delay={10} endPaddingWidth={-100} isLTR={true} duration={13000} isVertical={false}>
-                            <View style={{ flexDirection: 'row-reverse' }}>
+                        <AutoScroll delay={10} endPaddingWidth={-100} isLTR={true} duration={50000} isVertical={false}>
+                            <View style={{ flexDirection: 'row-reverse'  }}>
                                 {data.map((data) =>
-                                    <View key={data.id} style={{ flexDirection: 'row', marginHorizontal: 10 }}>
+                                    <View key={data.id} style={{ flexDirection: 'row', marginHorizontal:25,justifyContent:'center' }}>
 
                                         <View>
-                                            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                                             
-                                                <Text style={{ color: 'grey' ,textAlignVertical:'center',fontSize:14 ,fontFamily:'dast'}}>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
+                                                <Text style={{ color: 'grey', textAlignVertical: 'center', fontSize: 14, fontFamily: 'nazanin' }}>
                                                     {data.days_passed}</Text>
                                                 <Text style={styles.welcome} >{data.title}</Text>
                                             </View>
-                                            
-                                            <Text style={{ color: 'grey',marginTop:5 ,fontFamily:'dast'}}>   {data.content}</Text>
+
+                                            <Text style={{ color: 'grey', marginTop: 5, fontFamily: 'nazanin', alignSelf:'flex-end'}}>   {data.content}</Text>
 
                                         </View>
                                         <Image
-                                            style={{ width: 50, height: 50 }}
-                                            source={{
-                                                uri: data.img,
+                                            style={{
+                                                width: 70,
+                                                height: 70,
+
+                                                tintColor: '',
+                                                alignSelf: 'flex-center'
                                             }}
+                                            source={require('./assets/image/message1.gif')}
+                                            resizeMode='contain'
+
                                         />
 
 
@@ -110,7 +116,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginHorizontal: 10,
         paddingHorizontal: 10,
-        fontFamily:'dast'
+        fontFamily: 'nazanin'
 
 
 
